@@ -24,7 +24,7 @@ export default function RootLayout() {
   useEffect(() => {
     const load = async () => {
       if (loaded) {
-        // If nick is not set, we have to
+        // If nick is not set, we have to show onboarding screen
         const nick = await AsyncStorage.getItem("nick");
 
         if (true) {
