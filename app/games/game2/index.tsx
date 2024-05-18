@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform } from 'react-native';
 
-const mapobject = require("@/assets/ASDmap/map.json")
-const SQUARE_SIZE = 50;
-const GRID_COLUMNS = 12;
-const GRID_ROWS = 8;
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform, Button } from 'react-native';
+import {Simulate} from "react-dom/test-utils";
+import play = Simulate.play;
+const mapobject = require("@/assets/ASDmap/map.json");
+const SQUARE_SIZE = 50; // Rozmiar kwadratu
+const GRID_COLUMNS = 12; // Liczba kolumn
+const GRID_ROWS = 8; // Liczba wierszy
+        
 
 export default function Game2() { 
   const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
@@ -128,8 +131,11 @@ export default function Game2() {
       newCol++;
     }
 
+    playerPosition.row = newRow;
+    playerPosition.col = newCol;
     setPlayerPosition({ row: newRow, col: newCol });
   };
+
 
   const loadMapData = async () => {
     try {
@@ -146,6 +152,7 @@ export default function Game2() {
     }
   };
   
+
   const renderSquares = () => {
     const squares = [];
     for (let row = 0; row < GRID_ROWS; row++) {
@@ -178,6 +185,35 @@ export default function Game2() {
     }
     return squares;
   };
+    const runSimulation = async () => {
+        for (const block of  scriptBlocks) {
+            if (block.count !== undefined) {
+                for(let i = 0; i < block.count; i++) {
+                    switch (block.type) {
+                        case 'Góra':
+                            movePlayer('Up');
+                            break;
+                        case 'Dół':
+                            movePlayer('Down');
+                            break;
+                        case 'Lewo':
+                            movePlayer('Left');
+                            break;
+                        case 'Prawo':
+                            movePlayer('Right');
+                            break;
+                        default:
+                            break;
+                    }
+                    renderSquares();
+                    await new Promise (resolve => setTimeout(resolve, 1000));
+                }
+
+            } else {
+                console.log(block.type);
+            }
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -185,7 +221,7 @@ export default function Game2() {
                 {renderScriptBlocks()}
             </ScrollView>
       <View style={styles.simulationArea}>
-        <Text>Simulation Area</Text>
+          <Button title="Uruchom symulację" onPress={runSimulation} />
         <View style={styles.grid}>
           {renderSquares()}
         </View>
