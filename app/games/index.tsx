@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/ThemedText";
 import { router } from "expo-router";
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import { Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Button, StyleSheet } from "react-native";
@@ -22,6 +22,13 @@ const GamesList = () => {
     }
   };
 
+  const logOut = useCallback(async () => {
+    await AsyncStorage.removeItem("nick");
+    router.replace({
+      pathname: "/onboarding",
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <ThemedText>Statystyki</ThemedText>
@@ -34,15 +41,7 @@ const GamesList = () => {
           onPress={() => handleGameClick(game)}
         />
       ))}
-{/* logout  */}
-      <Pressable
-        onPress={async () => {
-          await AsyncStorage.removeItem("nick");
-          router.replace({
-            pathname: "/onboarding",
-          });
-        }}
-      >
+      <Pressable onPress={logOut}>
         <ThemedText>Logout</ThemedText>
       </Pressable>
     </View>

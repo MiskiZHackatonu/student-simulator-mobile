@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 // hard code urls
-// const registerLoginUrl = 'http://localhost:3000/api/registerOrLogin'; 
-const registerLoginUrl = 'http://172.20.10.2:3000/api/registerOrLogin'; 
+const registerLoginUrl = 'http://localhost:3000/api/registerOrLogin'; 
+// const registerLoginUrl = 'http://172.20.10.2:3000/api/registerOrLogin'; 
 
 async function userFetch(url, name){
   var responseBody = null;
