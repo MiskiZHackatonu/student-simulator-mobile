@@ -7,13 +7,15 @@ import { View, Button, StyleSheet } from "react-native";
 import { useRoute } from '@react-navigation/native';
 
 type RouteParams = {
-  nick: string;
+  params: {
+    nick: string;
+  };
 };
 
 const games = ["Game 1", "Game 2"];
 
 const GamesList = () => {
-  const route = useRoute<GamesListRouteProp>();
+  const route = useRoute<RouteParams>();
   const { nick } = route.params;
 
   const handleGameClick = (gameName: string) => {
