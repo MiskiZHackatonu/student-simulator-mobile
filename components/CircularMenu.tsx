@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-const CircularMenu = () => {
+const CircularMenu = ({setGameInfo}) => {
     const [containerLayout, setContainerLayout] = useState({x: 0, y: 0, width: 200, height: 200});
     const onLayout= (event) => {
         setContainerLayout(event.nativeEvent.layout)
@@ -26,7 +26,8 @@ const CircularMenu = () => {
     const menuItems = itemProps.map((props, index) => (
         <TouchableOpacity
         key={index}
-        style={[styles.menuItem, props]}>
+        style={[styles.menuItem, props]}
+        onPress={() => {console.log("dsfsfd"); setGameInfo(itemParams[index].label)}}>
         <Text style={styles.menuItemText}>{itemParams[index].label}</Text>
         </TouchableOpacity>
     ));
