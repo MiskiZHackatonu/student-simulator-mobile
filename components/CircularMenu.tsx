@@ -9,9 +9,10 @@ const CircularMenu = ({setGameInfo}) => {
     }
 
     const itemParams = [
-        {rad: containerLayout.width / 6, ang: 50, pos_rad: 100, label: "UNIX"}, 
-        {rad: containerLayout.width / 8, ang: 110, pos_rad: 100, label: "IO"},
-        {rad: containerLayout.width / 5, ang: 149, pos_rad: 120, label: "BAZY"},
+        {rad: containerLayout.width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
+        {rad: containerLayout.width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
+        {rad: containerLayout.width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
+        {rad: containerLayout.width / 10, ang: 20, pos_rad: 120, label: "SYSOPY", backgroundColor: 'green'},
 
     ]
     const center = {x: containerLayout.width / 2, y: containerLayout.height / 2}
@@ -20,14 +21,15 @@ const CircularMenu = ({setGameInfo}) => {
         height: params.rad * 2,
         top: params.pos_rad * Math.sin(params.ang) + center.y - params.rad,
         left: params.pos_rad * Math.cos(params.ang) + center.x - params.rad,
-        borderRadius: params.rad
+        borderRadius: params.rad,
+        backgroundColor: params.backgroundColor
     }));
 
     const menuItems = itemProps.map((props, index) => (
         <TouchableOpacity
         key={index}
         style={[styles.menuItem, props]}
-        onPress={() => {console.log("dsfsfd"); setGameInfo(itemParams[index].label)}}>
+        onPress={() => {setGameInfo(itemParams[index].label)}}>
         <Text style={styles.menuItemText}>{itemParams[index].label}</Text>
         </TouchableOpacity>
     ));
