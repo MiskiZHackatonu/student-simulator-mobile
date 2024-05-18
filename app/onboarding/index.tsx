@@ -9,9 +9,22 @@ import React, { useCallback, useState } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { registerUser, loginUser } from "./api";
 
 export default function OnboardingHome() {
   const [nick, setNick] = useState("");
+
+  const handlePressRegister = () => {
+    // console.log("pressed");
+    // sendDataToServer({ name: "test", password: "123" });
+    registerUser("test1", "123");
+  }
+
+  const handlePressLogin = () => {
+    // console.log("pressed");
+    // sendDataToServer({ name: "test", password: "123" });
+    loginUser("test1", "123");
+  }
 
   const onContinue = useCallback(() => {
     if (!nick) {
