@@ -16,7 +16,7 @@ export default function BootScreen() {
         // If nick is not set, we have to show onboarding screen
         const nick = await AsyncStorage.getItem("nick");
 
-        if (nick) {
+        if (true) {
           router.replace("/games");
         } else {
           router.replace("/onboarding");

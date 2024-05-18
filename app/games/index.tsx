@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import React from "react";
 import { View, Button, StyleSheet } from "react-native";
 
-const games = ["Game 1", "Game 2"];
+const games = ["Game 1", "Game 2", "Game 3"];
 
 const GamesList = () => {
   const handleGameClick = (gameName: string) => {
