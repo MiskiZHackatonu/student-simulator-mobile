@@ -1,6 +1,7 @@
-import { CameraView, useCameraPermissions } from "expo-camera";
+import { CameraView } from "expo-camera";
 import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function Camera({ onBarcodeScanned }) {
   const [facing, setFacing] = useState("back");
@@ -15,13 +16,28 @@ export default function Camera({ onBarcodeScanned }) {
         onBarcodeScanned={onBarcodeScanned}
         style={styles.camera}
         facing={facing}
+      />
+      <TouchableOpacity
+        style={[
+          styles.button,
+          {
+            position: "absolute",
+            right: 30,
+            bottom: 30,
+          },
+        ]}
+        onPress={toggleCameraFacing}
       >
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
+        <View
+          style={{
+            backgroundColor: "white",
+            borderRadius: 50,
+            padding: 10,
+          }}
+        >
+          <MaterialIcons name="flip-camera-ios" size={32} color="black" />
         </View>
-      </CameraView>
+      </TouchableOpacity>
     </View>
   );
 }
