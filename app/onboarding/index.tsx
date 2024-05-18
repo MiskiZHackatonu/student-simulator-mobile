@@ -5,36 +5,53 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
-import { registerUser, loginUser } from "./api";
+import { registerOrLogin } from "./api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function OnboardingHome() {
   const [nick, setNick] = useState("");
 
-  const handlePressRegister = () => {
-    // console.log("pressed");
-    // sendDataToServer({ name: "test", password: "123" });
-    registerUser("test1", "123");
-  }
+  useEffect(() => {
+    const checkNick = async () => {
+      const storedNick = await AsyncStorage.getItem('nick');
+      console.log(storedNick);
+      if (storedNick) {
+        router.replace({
+          pathname: "/games",
+          params: {
+            nick: storedNick,
+          },
+        });
+      }
+    };
 
-  const handlePressLogin = () => {
-    // console.log("pressed");
-    // sendDataToServer({ name: "test", password: "123" });
-    loginUser("test1", "123");
-  }
+    checkNick();
+  }, []);
 
-  const onContinue = useCallback(() => {
+
+  const onContinue = useCallback(async () => {
     if (!nick) {
       Alert.alert("Nick nie może być pusty");
       return;
     }
+    
+    try {
+      await registerOrLogin(nick);
+      await AsyncStorage.setItem('nick', nick);
+      router.replace({
+        pathname: "/games",
+        params: {
+          nick: nick,
+        },
+      })
+    } catch (error) {
+      Alert.alert("Błąd podczas rejestracji");
+    }
 
-    // TODO: save nick to async storage and navigate to /games when done
-
-    router.replace("/games");
   }, [nick]);
 
   return (
