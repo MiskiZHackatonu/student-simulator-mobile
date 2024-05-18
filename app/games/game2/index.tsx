@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform } from 'react-native';
 
-const mapobject = require("@/assets/ASDmap/map.json")
-const SQUARE_SIZE = 50;
-const GRID_COLUMNS = 12;
-const GRID_ROWS = 8;
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform, Button } from 'react-native';
+const mapobject = require("@/assets/ASDmap/map.json");
+const SQUARE_SIZE = 50; // Rozmiar kwadratu
+const GRID_COLUMNS = 12; // Liczba kolumn
+const GRID_ROWS = 8; // Liczba wierszy
+        
 
 export default function Game2() { 
   const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
@@ -18,40 +19,7 @@ export default function Game2() {
   useEffect(() =>{
     loadMapData();
   },[]);
-  
-  useEffect(() => {
-    const handleKeyPress = (event: any) => {
-      switch (event.key) {
-        case 'ArrowUp':
-          movePlayer('Up');
-          break;
-        case 'ArrowDown':
-          movePlayer('Down');
-          break;
-        case 'ArrowLeft':
-          movePlayer('Left');
-          break;
-        case 'ArrowRight':
-          movePlayer('Right');
-          break;
-        default:
-          break;
-      }
-    };
-    if (Platform.OS === 'web') {
-      window.addEventListener('keydown', handleKeyPress);
-    } else {
-      Keyboard.addListener('keydown', handleKeyPress);
-    }
 
-    return () => {
-      if (Platform.OS === 'web') {
-        window.removeEventListener('keydown', handleKeyPress);
-      } else {
-        Keyboard.removeListener('keydown', handleKeyPress);
-      }
-    };
-  }, [playerPosition]);
     const addBlockToScript = (type) => {
         let indentLevel = 0;
         if (scriptBlocks.length > 0) {
@@ -128,8 +96,11 @@ export default function Game2() {
       newCol++;
     }
 
+    playerPosition.row = newRow;
+    playerPosition.col = newCol;
     setPlayerPosition({ row: newRow, col: newCol });
   };
+
 
   const loadMapData = async () => {
     try {
@@ -178,6 +149,35 @@ export default function Game2() {
     }
     return squares;
   };
+    const runSimulation = async () => {
+        for (const block of  scriptBlocks) {
+            if (block.count !== undefined) {
+                for(let i = 0; i < block.count; i++) {
+                    switch (block.type) {
+                        case 'Góra':
+                            movePlayer('Up');
+                            break;
+                        case 'Dół':
+                            movePlayer('Down');
+                            break;
+                        case 'Lewo':
+                            movePlayer('Left');
+                            break;
+                        case 'Prawo':
+                            movePlayer('Right');
+                            break;
+                        default:
+                            break;
+                    }
+                    renderSquares();
+                    await new Promise (resolve => setTimeout(resolve, 1000));
+                }
+
+            } else {
+                console.log(block.type);
+            }
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -185,7 +185,7 @@ export default function Game2() {
                 {renderScriptBlocks()}
             </ScrollView>
       <View style={styles.simulationArea}>
-        <Text>Simulation Area</Text>
+          <Button title="Uruchom symulację" onPress={runSimulation} />
         <View style={styles.grid}>
           {renderSquares()}
         </View>
