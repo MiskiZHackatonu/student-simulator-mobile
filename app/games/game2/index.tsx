@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform, Button } from 'react-native';
-import {Simulate} from "react-dom/test-utils";
-import play = Simulate.play;
 const mapobject = require("@/assets/ASDmap/map.json");
 const SQUARE_SIZE = 50; // Rozmiar kwadratu
 const GRID_COLUMNS = 12; // Liczba kolumn
@@ -21,40 +19,7 @@ export default function Game2() {
   useEffect(() =>{
     loadMapData();
   },[]);
-  
-  useEffect(() => {
-    const handleKeyPress = (event: any) => {
-      switch (event.key) {
-        case 'ArrowUp':
-          movePlayer('Up');
-          break;
-        case 'ArrowDown':
-          movePlayer('Down');
-          break;
-        case 'ArrowLeft':
-          movePlayer('Left');
-          break;
-        case 'ArrowRight':
-          movePlayer('Right');
-          break;
-        default:
-          break;
-      }
-    };
-    if (Platform.OS === 'web') {
-      window.addEventListener('keydown', handleKeyPress);
-    } else {
-      Keyboard.addListener('keydown', handleKeyPress);
-    }
 
-    return () => {
-      if (Platform.OS === 'web') {
-        window.removeEventListener('keydown', handleKeyPress);
-      } else {
-        Keyboard.removeListener('keydown', handleKeyPress);
-      }
-    };
-  }, [playerPosition]);
     const addBlockToScript = (type) => {
         let indentLevel = 0;
         if (scriptBlocks.length > 0) {
