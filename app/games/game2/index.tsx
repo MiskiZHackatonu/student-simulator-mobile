@@ -1,20 +1,96 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Draggable from 'react-native-draggable';
-
+        
 const SQUARE_SIZE = 50; // Rozmiar kwadratu
 const GRID_COLUMNS = 12; // Liczba kolumn
 const GRID_ROWS = 8; // Liczba wierszy
-
-export default function Game2() {
-  const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
+        
+export default function Game2() { 
+    const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
   const [nextId, setNextId] = useState(0);
 
-  const addBlockToScript = (type: any) => {
-    setScriptBlocks([...scriptBlocks, { type, id: nextId }]);
-    setNextId(nextId + 1);
-  };
+    const addBlockToScript = (type) => {
+        let indentLevel = 0;
+        if (scriptBlocks.length > 0) {
+            const lastBlock = scriptBlocks[scriptBlocks.length - 1];
+            indentLevel = lastBlock.indentLevel;
+            if (lastBlock.type === 'Powtórz' && type !== 'Koniec powtórzenia') {
+                indentLevel += 1;
+            }
+        }
 
+        if (type === 'Koniec powtórzenia') {
+            indentLevel = scriptBlocks.filter(block => block.type === 'Powtórz').length - 1;
+        }
+
+        const newBlock = {
+            type,
+            id: scriptBlocks.length,
+            count: 1,
+            indentLevel,
+        };
+
+        if (type === 'Skocz' || type === 'Koniec powtórzenia') {
+            delete newBlock.count; // Skocz and Koniec powtórzenia don't have a count field
+        }
+
+        setScriptBlocks([...scriptBlocks, newBlock]);
+    };
+
+    const updateBlockCount = (id, count) => {
+        const parsedCount = parseInt(count);
+        setScriptBlocks(scriptBlocks.map(block =>
+            block.id === id ? { ...block, count: isNaN(parsedCount) ? '' : parsedCount } : block
+        ));
+    };
+
+    const renderScriptBlocks = () => {
+        return scriptBlocks.map((block) => (
+            <View
+                key={block.id}
+                style={[
+                    styles.scriptBlock,
+                    { marginLeft: block.indentLevel * 20 },
+                ]}
+            >
+                <TouchableOpacity onPress={() => removeBlockFromScript(block.id)}>
+                    <Text>{block.type}</Text>
+                </TouchableOpacity>
+                {'count' in block && block.count !== undefined && (
+                    <TextInput
+                        style={styles.input}
+                        keyboardType="numeric"
+                        value={block.count.toString()}
+                        onChangeText={(text) => updateBlockCount(block.id, text)}
+                    />
+                )}
+            </View>
+        ));
+    };
+
+    return (
+        <View style={styles.container}>
+            <ScrollView style={styles.scriptArea}>
+                {renderScriptBlocks()}
+            </ScrollView>
+            <View style={styles.simulationArea}>
+                <Text>Obszar Symulacji</Text>
+            </View>
+            <View style={styles.blocksArea}>
+                {['Góra', 'Dół', 'Lewo', 'Prawo', 'Skocz', 'Powtórz', 'Koniec powtórzenia'].map((direction, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={styles.block}
+                        onPress={() => addBlockToScript(direction)}
+                    >
+                        <Text>{direction}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+};
   const removeBlockFromScript = (id: number) => {
     setScriptBlocks(scriptBlocks.filter(block => block.id !== id));
   };
