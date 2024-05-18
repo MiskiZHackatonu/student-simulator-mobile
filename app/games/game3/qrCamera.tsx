@@ -7,35 +7,43 @@ import { BarcodeScanningResult } from "expo-camera";
 const NewWordsMap = {
   HELP_1: ["FROM", "*", "WYBIERZ", "OD", "Studenci"],
   HELP_2: [
-    "INSERT",
-    "INTO",
-    "Książki",
     "(Id, Tytuł, Autor)",
-    "VALUES",
+    "INTO",
+    "INSERT",
+    "Książki",
     "(10, 'Mój Przyjaciel Robot', 'Adam Mickiewicz')",
+    "VALUES",
   ],
   HELP_3: [
-    "UPDATE",
-    "Zamowienia",
-    "SET",
     "Cena = 5.50",
+    "SET",
     "WHERE",
     "NazwaProduktu = 'Jablko'",
+    "Zamowienia",
     "AND",
     "IdZamowienia = 20",
+    "UPDATE",
   ],
 };
 
 export default function QrCamera() {
-  const { wordBank, setWordBank } = useContext(Game3Context);
+  const { wordBank, setWordBank, foundHelps, setFoundHelps } =
+    useContext(Game3Context);
 
   const [runOnlyOnce, setRunOnlyOnce] = useState(false);
 
   return (
     <Camera
-      onBarcodeScanned={(e: BarcodeScanningResult) => {
-        if (!(e.data in NewWordsMap) || runOnlyOnce) return;
+      onBarcodeScanned={async (e: BarcodeScanningResult) => {
+        if (foundHelps.includes(e.data)) {
+          return;
+        } else {
+          setFoundHelps?.([...foundHelps, e.data]);
+        }
 
+        if (runOnlyOnce || !(e.data in NewWordsMap)) return;
+
+        // @ts-ignore
         setWordBank?.([...wordBank, ...NewWordsMap[e.data]]);
 
         router.replace(`/games/game3/${e.data.toLowerCase().replace("_", "")}`);

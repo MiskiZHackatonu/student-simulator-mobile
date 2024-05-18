@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Help1() {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
       <ScrollView
         contentContainerStyle={{
           marginLeft: "auto",
@@ -33,8 +33,12 @@ export default function Help1() {
           }}
           type="default"
         >
-          UPDATE Zamowienia SET Cena = 5.50 WHERE NazwaProduktu = 'Jablko' AND
-          IdZamowienia = 20;
+          Człowieku, myślisz że ja chodziłem na te zajęcia? XD. Znalazłem na
+          wiki coś takiego:
+          {"\n"}
+          {"\n"}
+          Aby zaktualizować rekord w bazie danych, użyj zapytania: UPDATE
+          [tabela] SET [coś do zaktualizowania] WHERE [warunek]
         </ThemedText>
       </ScrollView>
     </SafeAreaView>
@@ -42,9 +46,6 @@ export default function Help1() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-  },
   textinput: {
     borderColor: "gray",
     borderWidth: 1,
