@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform } from 'react-native';
-        
-const SQUARE_SIZE = 50; // Rozmiar kwadratu
-const GRID_COLUMNS = 12; // Liczba kolumn
-const GRID_ROWS = 8; // Liczba wierszy
-        
-export default function Game2() { 
-    const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
-  const [nextId, setNextId] = useState(0);
-  const [playerPosition, setPlayerPosition] = useState({ row: 0, col: 0 }); // Pozycja gracza
 
+const mapobject = require("@/assets/ASDmap/map.json")
+const SQUARE_SIZE = 50;
+const GRID_COLUMNS = 12;
+const GRID_ROWS = 8;
+
+export default function Game2() { 
+  const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
+  const [nextId, setNextId] = useState(0);
+  const [playerPosition, setPlayerPosition] = useState({ row: 0, col: 0 });
+  const [endPosition, setEndPosition] = useState({ row: 3, col: 3 });
+  const [beer, setBeer] = useState<any[]>([]);
+  const [puddle, setPuddle] = useState<any[]>([]);
+  const [wall, setWall] = useState<any[]>([]);
+
+  useEffect(() =>{
+    loadMapData();
+  },[]);
+  
   useEffect(() => {
     const handleKeyPress = (event: any) => {
       switch (event.key) {
@@ -121,12 +130,32 @@ export default function Game2() {
 
     setPlayerPosition({ row: newRow, col: newCol });
   };
+
+  const loadMapData = async () => {
+    try {
+      if (mapobject !== null) {
+        console.log("ej");
+        setPlayerPosition(mapobject.playerPosition);
+        setEndPosition(mapobject.endPosition);
+        setBeer(mapobject.beer);
+        setPuddle(mapobject.puddle);
+        setWall(mapobject.wall);
+      }
+    } catch (error) {
+      console.error('Błąd wczytywania danych z pliku map.json:', error);
+    }
+  };
+  
   const renderSquares = () => {
     const squares = [];
     for (let row = 0; row < GRID_ROWS; row++) {
       for (let col = 0; col < GRID_COLUMNS; col++) {
         const isGreen = (row + col) % 2 === 0;
         const isPlayerPosition = row === playerPosition.row && col === playerPosition.col;
+        const isEndPosition = row === endPosition.row && col === endPosition.col;
+        const isBeerPosition = beer.some(item => item.row === row && item.col === col);
+        const isPuddlePosition = puddle.some(item => item.row === row && item.col === col);
+        const isWallPosition = wall.some(item => item.row === row && item.col === col);
 
         squares.push(
           <View
@@ -136,8 +165,13 @@ export default function Game2() {
               { backgroundColor: 'transparent' }
             ]}
           >
-            {isPlayerPosition && <Image source={require('./graphics/player.png')} style={styles.player} />}
-            <Image source={require('./graphics/grass.png')} style={styles.image} />
+            {isPlayerPosition && <Image source={require('@/assets/images/player.png')} style={styles.player} />}
+            {isEndPosition && <Image source={require('@/assets/images/kapitol.png')} style={styles.bottomBlock} />}
+            {isBeerPosition && <Image source={require('@/assets/images/beer.png')} style={styles.bottomBlock} />}
+            {isPuddlePosition && <Image source={require('@/assets/images/puddle.png')} style={styles.bottomBlock} />}
+            {isWallPosition && <Image source={require('@/assets/images/wall.png')} style={styles.bottomBlock} />}
+
+            <Image source={require('@/assets/images/grass.png')} style={styles.image} />
           </View>
         );
       }
@@ -228,6 +262,13 @@ const styles = StyleSheet.create({
   player: {
     width: '80%',
     height: '80%',
+    resizeMode: 'contain',
+    position: 'absolute',
+    zIndex: 3,
+  },
+  bottomBlock: {
+    width: '100%',
+    height: '100%',
     resizeMode: 'contain',
     position: 'absolute',
     zIndex: 2,
