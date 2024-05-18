@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Keyboard, Platform } from 'react-native';
 import Draggable from 'react-native-draggable';
 
 const SQUARE_SIZE = 50; // Rozmiar kwadratu
@@ -9,6 +9,42 @@ const GRID_ROWS = 8; // Liczba wierszy
 export default function Game2() {
   const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
   const [nextId, setNextId] = useState(0);
+  const [playerPosition, setPlayerPosition] = useState({ row: 0, col: 0 }); // Pozycja gracza
+
+  useEffect(() => {
+    const handleKeyPress = (event: any) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          movePlayer('Up');
+          break;
+        case 'ArrowDown':
+          movePlayer('Down');
+          break;
+        case 'ArrowLeft':
+          movePlayer('Left');
+          break;
+        case 'ArrowRight':
+          movePlayer('Right');
+          break;
+        default:
+          break;
+      }
+    };
+
+    if (Platform.OS === 'web') {
+      window.addEventListener('keydown', handleKeyPress);
+    } else {
+      Keyboard.addListener('keydown', handleKeyPress);
+    }
+
+    return () => {
+      if (Platform.OS === 'web') {
+        window.removeEventListener('keydown', handleKeyPress);
+      } else {
+        Keyboard.removeListener('keydown', handleKeyPress);
+      }
+    };
+  }, [playerPosition]);
 
   const addBlockToScript = (type: any) => {
     setScriptBlocks([...scriptBlocks, { type, id: nextId }]);
@@ -17,6 +53,23 @@ export default function Game2() {
 
   const removeBlockFromScript = (id: number) => {
     setScriptBlocks(scriptBlocks.filter(block => block.id !== id));
+  };
+
+  const movePlayer = (direction: string) => {
+    let newRow = playerPosition.row;
+    let newCol = playerPosition.col;
+
+    if (direction === 'Up' && playerPosition.row > 0) {
+      newRow--;
+    } else if (direction === 'Down' && playerPosition.row < GRID_ROWS - 1) {
+      newRow++;
+    } else if (direction === 'Left' && playerPosition.col > 0) {
+      newCol--;
+    } else if (direction === 'Right' && playerPosition.col < GRID_COLUMNS - 1) {
+      newCol++;
+    }
+
+    setPlayerPosition({ row: newRow, col: newCol });
   };
 
   const renderScriptBlocks = () => {
@@ -32,6 +85,8 @@ export default function Game2() {
     for (let row = 0; row < GRID_ROWS; row++) {
       for (let col = 0; col < GRID_COLUMNS; col++) {
         const isGreen = (row + col) % 2 === 0;
+        const isPlayerPosition = row === playerPosition.row && col === playerPosition.col;
+
         squares.push(
           <View
             key={`${row}-${col}`}
@@ -40,6 +95,7 @@ export default function Game2() {
               { backgroundColor: 'transparent' }
             ]}
           >
+            {isPlayerPosition && <Image source={require('./graphics/player.png')} style={styles.player} />}
             <Image source={require('./graphics/grass.png')} style={styles.image} />
           </View>
         );
@@ -64,7 +120,7 @@ export default function Game2() {
           <TouchableOpacity
             key={index}
             style={styles.block}
-            onPress={() => addBlockToScript(direction)}
+            onPress={() => movePlayer(direction)}
           >
             <Text>{direction}</Text>
           </TouchableOpacity>
@@ -119,11 +175,21 @@ const styles = StyleSheet.create({
     height: SQUARE_SIZE,
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
+    position: 'absolute',
+    zIndex: 1,
+  },
+  player: {
+    width: '80%',
+    height: '80%',
+    resizeMode: 'contain',
+    position: 'absolute',
+    zIndex: 2,
   },
   block: {
     padding: 10,
