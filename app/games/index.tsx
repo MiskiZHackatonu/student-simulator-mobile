@@ -1,7 +1,9 @@
 import { ThemedText } from "@/components/ThemedText";
 import { router } from "expo-router";
 import React from "react";
-import { View, Button, StyleSheet } from "react-native";
+import { View, Button, StyleSheet, Pressable, Text } from "react-native";
+import { registerUser, loginUser } from "./api";
+
 
 const games = ["Game 1", "Game 2"];
 
@@ -11,6 +13,17 @@ const GamesList = () => {
       router.push(`/games/${gameName.toLowerCase().replace(" ", "")}`);
     }
   };
+  const handlePressRegister = () => {
+    // console.log("pressed");
+    // sendDataToServer({ name: "test", password: "123" });
+    registerUser("test1", "123");
+  }
+
+  const handlePressLogin = () => {
+    // console.log("pressed");
+    // sendDataToServer({ name: "test", password: "123" });
+    loginUser("test1", "123");
+  }
 
   return (
     <View style={styles.container}>
@@ -23,6 +36,13 @@ const GamesList = () => {
           onPress={() => handleGameClick(game)}
         />
       ))}
+      {/* example of sending data to server */}
+      <Pressable onPress={handlePressRegister}>
+        <Text>register</Text>
+      </Pressable>
+      <Pressable onPress={handlePressLogin}>
+        <Text>login</Text>
+      </Pressable>
     </View>
   );
 };
