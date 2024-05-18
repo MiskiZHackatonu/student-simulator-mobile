@@ -43,9 +43,6 @@ export default function Game3() {
           Dodatkowo to kolokwium musisz niestety napisać na 100%. Na szczęście
           prowadzący czasami wychodzi z sali, a więc masz szansę na pomoc od
           kolegów - podejdź do nich skanując kod QR i skorzystaj z ich wiedzy!
-          {"\n"}
-          {"\n"}
-          P.S. Nie można cofać się do poprzednich pytań.
         </ThemedText>
         <Pressable onPress={() => router.push("/games/game3/q1")}>
           <ThemedText
