@@ -1,11 +1,15 @@
 import { ThemedText } from "@/components/ThemedText";
 import { router } from "expo-router";
-import React from "react";
-import { View, Button, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import InfoBottomsheet from "@/components/InfoBottomsheet";
+import CircularMenu from "@/components/CircularMenu";
 
 const games = ["Game 1", "Game 2", "Game 3"];
 
 const GamesList = () => {
+  const [gameInfo, setGameInfo] = useState("None");
+
   const handleGameClick = (gameName: string) => {
     if (games.includes(gameName)) {
       router.push(`/games/${gameName.toLowerCase().replace(" ", "")}`);
@@ -13,17 +17,14 @@ const GamesList = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ThemedText>Statystyki</ThemedText>
-      <ThemedText>Select a Game:</ThemedText>
-      {games.map((game, index) => (
-        <Button
-          key={index}
-          title={game}
-          onPress={() => handleGameClick(game)}
-        />
-      ))}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <CircularMenu setGameInfo={setGameInfo} />
+      <InfoBottomsheet
+        key={gameInfo}
+        currentGameInfo={gameInfo}
+        setCurrentGameInfo={setGameInfo}
+      />
+    </SafeAreaView>
   );
 };
 
@@ -32,11 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
-  },
-  header: {
-    fontSize: 20,
-    marginBottom: 10,
   },
 });
 
