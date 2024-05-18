@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform, Button } from 'react-native';
+import {Simulate} from "react-dom/test-utils";
+import play = Simulate.play;
         
 const SQUARE_SIZE = 50; // Rozmiar kwadratu
 const GRID_COLUMNS = 12; // Liczba kolumn
@@ -119,6 +121,8 @@ export default function Game2() {
       newCol++;
     }
 
+    playerPosition.row = newRow;
+    playerPosition.col = newCol;
     setPlayerPosition({ row: newRow, col: newCol });
   };
 
@@ -145,18 +149,15 @@ export default function Game2() {
     }
     return squares;
   };
-    const runSimulation = () => {
-        scriptBlocks.forEach(block => {
+    const runSimulation = async () => {
+        for (const block of  scriptBlocks) {
             if (block.count !== undefined) {
                 for(let i = 0; i < block.count; i++) {
-
                     switch (block.type) {
                         case 'Góra':
                             movePlayer('Up');
                             break;
                         case 'Dół':
-                            // console.log(block.type);
-                            // console.log(block.count);
                             movePlayer('Down');
                             break;
                         case 'Lewo':
@@ -168,13 +169,14 @@ export default function Game2() {
                         default:
                             break;
                     }
-                    renderSquares()
+                    renderSquares();
+                    await new Promise (resolve => setTimeout(resolve, 1000));
                 }
 
             } else {
                 console.log(block.type);
             }
-        });
+        }
     };
 
     return (
