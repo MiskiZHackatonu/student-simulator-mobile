@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView , Image, Keyboard, Platform, Button } from 'react-native';
         
 const SQUARE_SIZE = 50; // Rozmiar kwadratu
 const GRID_COLUMNS = 12; // Liczba kolumn
@@ -121,6 +121,7 @@ export default function Game2() {
 
     setPlayerPosition({ row: newRow, col: newCol });
   };
+
   const renderSquares = () => {
     const squares = [];
     for (let row = 0; row < GRID_ROWS; row++) {
@@ -144,6 +145,37 @@ export default function Game2() {
     }
     return squares;
   };
+    const runSimulation = () => {
+        scriptBlocks.forEach(block => {
+            if (block.count !== undefined) {
+                for(let i = 0; i < block.count; i++) {
+
+                    switch (block.type) {
+                        case 'Góra':
+                            movePlayer('Up');
+                            break;
+                        case 'Dół':
+                            // console.log(block.type);
+                            // console.log(block.count);
+                            movePlayer('Down');
+                            break;
+                        case 'Lewo':
+                            movePlayer('Left');
+                            break;
+                        case 'Prawo':
+                            movePlayer('Right');
+                            break;
+                        default:
+                            break;
+                    }
+                    renderSquares()
+                }
+
+            } else {
+                console.log(block.type);
+            }
+        });
+    };
 
     return (
         <View style={styles.container}>
@@ -151,7 +183,7 @@ export default function Game2() {
                 {renderScriptBlocks()}
             </ScrollView>
       <View style={styles.simulationArea}>
-        <Text>Simulation Area</Text>
+          <Button title="Uruchom symulację" onPress={runSimulation} />
         <View style={styles.grid}>
           {renderSquares()}
         </View>
