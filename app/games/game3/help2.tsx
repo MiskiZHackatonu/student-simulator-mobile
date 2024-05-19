@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Help1() {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
       <ScrollView
         contentContainerStyle={{
           marginLeft: "auto",
@@ -33,8 +33,15 @@ export default function Help1() {
           }}
           type="default"
         >
-          INSERT INTO Książki (Id, Tytuł, Autor) VALUES (10, 'Mój Przyjaciel
-          Robot', 'Adam Mickiewicz');
+          Hahaha tak myślałem, że nic nie ogarnąłeś na dzisiaj xD. Dobra, ja w
+          przeciwieństwie do ciebie zrobiłem notatki i coś tam mam. Akurat byłem
+          na zajęciach z tworzenia nowych rekordów w bazie danych i w sumie to
+          nie jest trudne, ale jakbyś nie wiedział to zawsze możesz zerknąć na
+          moje notatki:
+          {"\n"}
+          {"\n"}
+          Wstawianie do bazy: [INSERT INTO] [tabela] [(kolumny)] [VALUES]
+          [(wartości)];
         </ThemedText>
       </ScrollView>
     </SafeAreaView>
@@ -42,9 +49,6 @@ export default function Help1() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-  },
   textinput: {
     borderColor: "gray",
     borderWidth: 1,
