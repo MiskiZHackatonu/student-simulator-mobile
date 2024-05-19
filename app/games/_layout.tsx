@@ -7,7 +7,7 @@ const StackNavigator = () => {
   const [completed, setCompleted] = useState([])
   
   return(
-   < AllGamesContext.Provider value={{
+   <AllGamesContext.Provider value={{
     completed, setCompleted
    }}>
   <Stack>
@@ -28,5 +28,6 @@ const StackNavigator = () => {
   </Stack>
   </AllGamesContext.Provider>
 );
+
 }
 export default StackNavigator;
