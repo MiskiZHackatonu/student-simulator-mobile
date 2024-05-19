@@ -74,7 +74,7 @@ butelki piwa! Niestety twoja wiedza algorytmiczna jest zerowa - nic dziwnego, \
 przecież nie ma co się uczyć w trakcie semestru. Na szczęście możesz znaleźć \
 porozrzucane kody QR po sali, dzięki czemu skanując je, poznasz \
 bloczkowe procedury, dzięki czemu będziesz w stanie napisać algorytm!"
-    },
+    }
   };
 
 export default function Bottomsheet({ currentGameInfo, setCurrentGameInfo }) {

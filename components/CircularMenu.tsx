@@ -35,7 +35,7 @@ const CircularMenu = ({ setGameInfo, itemParams, completed }) => {
       key={index}
       style={[styles.menuItem, props]}
       onPress={() => {
-        if ("NON_CLICKABLE" === itemParams[index].label) return;
+        if ("NON_CLICKABLE" === itemParams[index].label || "CYFRÓWKA" === itemParams[index].label || "SIECI" === itemParams[index].label || "DYSKRETNA" === itemParams[index].label) return;
         setGameInfo(itemParams[index].label);
       }}
     >

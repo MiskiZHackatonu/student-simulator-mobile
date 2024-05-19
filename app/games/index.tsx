@@ -20,19 +20,19 @@ const s1_itemParams = [
     ang: 10,
     pos_rad: 10,
     label: "BAZY",
-    backgroundColor: "blue",
+    backgroundColor: "#F6A200",
   },
   {
     rad: width / 10,
     ang: 10.05,
     pos_rad: 170,
     label: "ASD",
-    backgroundColor: "green",
+    backgroundColor: "#13447E",
   },
 ];
 const s2_itemParams = [
-  {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
-  {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
+  {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: '#F6A200'}, 
+  {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: '#13447E'},
 ]
 
 
@@ -42,49 +42,94 @@ const useless_items = [
     ang: 4,
     pos_rad: -250,
     label: "NON_CLICKABLE",
-    backgroundColor: "purple",
+    backgroundColor: "#13447E",
   },
   {
     rad: width / 6,
     ang: 5.4,
     pos_rad: 130,
     label: "NON_CLICKABLE",
-    backgroundColor: "#A10000",
+    backgroundColor: "#84acca",
   },
   {
     rad: width / 4,
     ang: 4.5,
     pos_rad: 200,
-    label: "NON_CLICKABLE",
-    backgroundColor: "#000080",
+    label: "CYFRÓWKA",
+    backgroundColor: "#84ACCE",
   },
   {
     rad: width / 12,
     ang: 5.10,
     pos_rad: 230,
     label: "NON_CLICKABLE",
-    backgroundColor: "darkviolet",
+    backgroundColor: "#13447E",
   },
   {
     rad: width / 18,
     ang: 5.33,
     pos_rad: 350,
     label: "NON_CLICKABLE",
-    backgroundColor: "#AA336A",
+    backgroundColor: "#84ACCE",
   },
   {
     rad: width / 10,
     ang: 2.5,
     pos_rad: 150,
     label: "NON_CLICKABLE",
-    backgroundColor: "cyan",
+    backgroundColor: "#84ACCE",
+  }
+];
+
+const useless_items_s2 = [
+  {
+    rad: width / 6,
+    ang: 4,
+    pos_rad: -250,
+    label: "SIECI",
+    backgroundColor: "#13447E",
+  },
+  {
+    rad: width / 6,
+    ang: 5.4,
+    pos_rad: 130,
+    label: "NON_CLICKABLE",
+    backgroundColor: "#84acca",
+  },
+  {
+    rad: width / 4,
+    ang: 4.5,
+    pos_rad: 200,
+    label: "DYSKRETNA",
+    backgroundColor: "#84ACCE",
+  },
+  {
+    rad: width / 12,
+    ang: 5.10,
+    pos_rad: 230,
+    label: "NON_CLICKABLE",
+    backgroundColor: "#13447E",
+  },
+  {
+    rad: width / 18,
+    ang: 5.33,
+    pos_rad: 350,
+    label: "NON_CLICKABLE",
+    backgroundColor: "#84ACCE",
+  },
+  {
+    rad: width / 10,
+    ang: 2.5,
+    pos_rad: 150,
+    label: "NON_CLICKABLE",
+    backgroundColor: "#84ACCE",
   }
 ];
 
 
 const data = [
   { image: s1_image, params: [...useless_items, ...s1_itemParams] },
-  { image: s2_image, params: s2_itemParams },
+  { image: s2_image, params: [...useless_items_s2, ...s2_itemParams] },
 ];
 type ParamList = {
   params: {
