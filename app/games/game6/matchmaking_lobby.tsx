@@ -4,22 +4,41 @@ import { TextInput } from "react-native-gesture-handler";
 import { router } from "expo-router";
 import { matchmaking } from "@/app/onboarding/api";
 import { AllGamesContext } from "../_layout";
-
+import { ThemedText } from "@/components/ThemedText";
 export default function LobbyPage() {
   const [matchmaking_code, setMatchmakingCode] = useState("");
   const {nick} = useContext(AllGamesContext)
 
   return (
     <View>
-      <Text>
-        Tutorial:{'\n'}
+      <ThemedText
+          style={{
+            marginTop: 90,
+            textAlign: "center",
+          }}
+          type="title"
+        >
+        Tutorial matchmakingu:{'\n'}
         1. Znajdź drugą osobę, która chce zagrać w grę.{'\n'}
         2. Wpiszcie obydwoje ten sam kod matchmakingu.{'\n'}
         3. Naciśnijcie przycisk "Rozpocznij".{'\n'}
         Po połączeniu z drugą osobą zostaniecie przeniesieni do lobby gry waszym zadaniem będzie wspólne rozwiązanie
         zadania.{'\n'}
-        
-      </Text>
+      </ThemedText>
+      <ThemedText
+          style={{
+            marginTop: 90,
+            textAlign: "center",
+          }}
+          type="title"
+        >
+      Tutorial gry:{'\n'}
+      Na ekranie zobaczysz 2 zbiory kart.{'\n'}
+      Te na górze należą do drugiego gracza, nie możesz nimi poruszać ale posiadasz informacje o ich wartościach.{'\n'}
+      Twoje karty znajdują się na dole.{'\n'}
+      Waszym zadaniem jest ułożenie kart w odpowiednich kolumnach tak aby suma wartości kart w kolumnie była równa wartości na dole kolumny.{'\n'}
+      Clem gry jest aby obydwoje graczy ułoży karty w odpowiednich kolumnach 
+      </ThemedText>
       <View>
         <TextInput
             value={matchmaking_code}

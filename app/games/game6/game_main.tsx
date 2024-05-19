@@ -6,7 +6,34 @@ import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
 import { ScrollView } from 'react-native-gesture-handler';
 import {games6Solved} from "@/app/onboarding/api";
 import { AllGamesContext } from "../_layout";
-
+const  board_data = {
+  1:{
+    "cards": ["+7","+4","+3","+2","+3","+4","+2"],
+    "expectedValues": [14,5,6],
+    "titles":[
+      "Dokumentacja wymagań funkcjonalnych i niefunkcjonalnych.",
+      "Tworzenie dokumentacji technicznej dla nowych funkcji.",
+      "Określenie architektury systemu.",
+      'Stworzenie wireframe\'ów i mockupów.',
+      'Przygotowanie prototypów do testów użyteczności.',
+      'Kodowanie backendu dla uwierzytelniania użytkowników.',
+'          Tworzenie frontendu dla formularza logowania.'
+    ]
+  },
+  2:{
+    "cards": ["+2","+3","+1","+2","+2","+5","+7"],
+    "expectedValues": [6,4,12],
+    "titles": [
+      'Tworzenie testów jednostkowych dla nowo dodanych funkcji.',
+      'Aktualizacja istniejących testów.',
+      'Łączenie aplikacji z zewnętrznym API.',
+      'Przeprowadzanie testów integracyjnych.',
+      'Sprawdzenie jakości kodu i zgodności z wytycznymi.',
+      'Wyszukiwanie potencjalnych błędów i sugestii ulepszeń.',
+      'Sprawdzenie, czy kod spełnia ustalone standardy.'
+    ]
+  }
+}
 export default function ScrolableHorizontal(){
     const {nick} = useContext(AllGamesContext)
 
@@ -14,34 +41,7 @@ export default function ScrolableHorizontal(){
        
       }
     
-    const  board_data = {
-        1:{
-          "cards": ["+7","+4","+3","+2","+3","+4","+2"],
-          "expectedValues": [14,5,6],
-          "titles":[
-            "Dokumentacja wymagań funkcjonalnych i niefunkcjonalnych.",
-            "Tworzenie dokumentacji technicznej dla nowych funkcji.",
-            "Określenie architektury systemu.",
-            'Stworzenie wireframe\'ów i mockupów.',
-            'Przygotowanie prototypów do testów użyteczności.',
-            'Kodowanie backendu dla uwierzytelniania użytkowników.',
-  '          Tworzenie frontendu dla formularza logowania.'
-          ]
-        },
-        2:{
-          "cards": ["+2","+3","+1","+2","+2","+5","+7"],
-          "expectedValues": [6,4,12],
-          "titles": [
-            'Tworzenie testów jednostkowych dla nowo dodanych funkcji.',
-            'Aktualizacja istniejących testów.',
-            'Łączenie aplikacji z zewnętrznym API.',
-            'Przeprowadzanie testów integracyjnych.',
-            'Sprawdzenie jakości kodu i zgodności z wytycznymi.',
-            'Wyszukiwanie potencjalnych błędów i sugestii ulepszeń.',
-            'Sprawdzenie, czy kod spełnia ustalone standardy.'
-          ]
-        }
-      }
+    
     const params = useLocalSearchParams();
     const player_id:number = params.player_id;
     const other_player_id = (player_id == 1 ? 2 : 1);
