@@ -4,7 +4,7 @@ const StackNavigator = () => (
   <Stack
     screenOptions={
       {
-        // headerShown: false,
+        headerShown: true,
       }
     }
   />
