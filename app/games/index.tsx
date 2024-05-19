@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import React, { useState, useCallback, useEffect, useContext } from "react";
-import { SafeAreaView, StyleSheet, FlatList, Dimensions, ImageBackground, Text, View, Pressable } from "react-native";
+import { SafeAreaView, StyleSheet, FlatList, Dimensions, ImageBackground, Text, View, Pressable, Image} from "react-native";
 import InfoBottomsheet from "@/components/InfoBottomsheet";
 import CircularMenu from "@/components/CircularMenu";
 import QRButton from "@/components/QRButton";
@@ -10,8 +10,9 @@ import { AllGamesContext } from "./_layout";
 import { ThemedText } from "@/components/ThemedText";
 
 const { width, height } = Dimensions.get('window');
-const s1_image = require('./../../assets/images/wydzial.jpg')
-const s2_image = require('./../../assets/images/wydzial.jpg')
+const s1_image = require('./../../assets/images/1.jpg')
+const s2_image = require('./../../assets/images/2.jpg')
+const background_wiet = require('./../../assets/images/background_wiet.jpg')
 
 const s1_itemParams = [
   {rad: width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
@@ -21,6 +22,7 @@ const s2_itemParams = [
   {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
   {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
 ]
+
 
 const data = [
   {image: s1_image, params: s1_itemParams}, 
@@ -37,18 +39,18 @@ const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
 
   return (
     <SafeAreaView style={styles.item}>
-    <ImageBackground
+    {/* <ImageBackground
     source={image}
     style={styles.backgroundImage}
     resizeMode="cover"
-      >
+      > */}
     <CircularMenu setGameInfo={setGameInfo} itemParams={itemParams} completed={completed}/>
     <InfoBottomsheet
       key={gameInfo}
       currentGameInfo={gameInfo}
       setCurrentGameInfo={setGameInfo}
     />
-    </ImageBackground>
+    {/* </ImageBackground> */}
   </SafeAreaView>
   )
 }
@@ -59,6 +61,7 @@ const App = () => {
   const route = useRoute<RouteProp<ParamList, 'params'>>();
   const { nick } = route.params;
   const navigation = useNavigation();
+  const [backgroundOffset, setBackgroundOffset] = useState(0);
 
   const {setNick} = useContext(AllGamesContext)
   setNick(nick);
@@ -93,8 +96,21 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.item}>
+    <View>
+      <Image style={{ 
+        height: height, 
+        width: width * 2.4, 
+        position: 'absolute', 
+        top:0, 
+        left:backgroundOffset - width / 2}} 
+        source={background_wiet} />
+    </View>
     <FlatList
       data={data}
+      onScroll={(event) => {
+        const scrolling = -event.nativeEvent.contentOffset.x;
+        setBackgroundOffset(scrolling)
+      }}
       renderItem={({ item }) => <Screen 
         gameInfo = {gameInfo} 
         setGameInfo={setGameInfo} 
@@ -118,6 +134,7 @@ const App = () => {
             borderRadius: 50,
             zIndex: 100,
     }} onPress={() => router.push("/games/qrCamera")}/>
+    {/* </ImageBackground> */}
     </SafeAreaView>
   );
 };
