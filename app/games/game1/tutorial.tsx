@@ -6,13 +6,15 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { router } from "expo-router";
+import { AllGamesContext } from "../_layout";
 
 export default function TutorialPage() {
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState(0);
+  const { setCompleted } = useContext(AllGamesContext);
 
   return (
     <SafeAreaView>
@@ -70,11 +72,15 @@ export default function TutorialPage() {
               onPress={() => {
                 if (AnswerValidation(answer)) {
                   setResult(1);
+                  setCompleted((completed) => [...completed, "UNIX"]);
                   Alert.alert("Poprawna odpowiedź", "Gratulacje", [
                     {
                       text: "OK",
                       onPress: () => {
                         router.replace("/games");
+                        while (router.canGoBack()) {
+                          router.back();
+                        }
                       },
                     },
                   ]);
