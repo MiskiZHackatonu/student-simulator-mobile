@@ -1,6 +1,15 @@
 import { Stack } from "expo-router";
+import { createContext, useState} from "react";
 
-const StackNavigator = () => (
+export const AllGamesContext = createContext({})
+
+const StackNavigator = () => {
+  const [completed, setCompleted] = useState([])
+  
+  return(
+   < AllGamesContext.Provider value={{
+    completed, setCompleted
+   }}>
   <Stack>
     <Stack.Screen
           name="index"
@@ -17,6 +26,7 @@ const StackNavigator = () => (
     />
   
   </Stack>
+  </AllGamesContext.Provider>
 );
-
+}
 export default StackNavigator;

@@ -1,39 +1,20 @@
-import { ThemedText } from "@/components/ThemedText";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, StyleSheet, FlatList, Dimensions, ImageBackground, Text, View} from "react-native";
 import InfoBottomsheet from "@/components/InfoBottomsheet";
 import CircularMenu from "@/components/CircularMenu";
 import QRButton from "@/components/QRButton";
+import { AllGamesContext } from "./_layout";
+
 
 const { width, height } = Dimensions.get('window');
-
-const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
-  return (
-    <SafeAreaView style={styles.item}>
-    <ImageBackground
-    source={image}
-    style={styles.backgroundImage}
-    resizeMode="cover"
-      >
-    <CircularMenu setGameInfo={setGameInfo} itemParams={itemParams}/>
-    <InfoBottomsheet
-      key={gameInfo}
-      currentGameInfo={gameInfo}
-      setCurrentGameInfo={setGameInfo}
-    />
-    </ImageBackground>
-  </SafeAreaView>
-  )
-}
-
 const s1_image = require('./../../assets/images/wydzial.jpg')
+const s2_image = require('./../../assets/images/wydzial.jpg')
+
 const s1_itemParams = [
   {rad: width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
   {rad: width / 10, ang: 20, pos_rad: 120, label: "SYSOPY", backgroundColor: 'green'}
 ]
-
-const s2_image = require('./../../assets/images/wydzial.jpg')
 const s2_itemParams = [
   {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
   {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
@@ -43,6 +24,28 @@ const data = [
   {image: s1_image, params: s1_itemParams}, 
   {image: s2_image, params: s2_itemParams}
 ]
+
+const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
+
+  const {completed, setCompleted} = useContext(AllGamesContext)
+
+  return (
+    <SafeAreaView style={styles.item}>
+    <ImageBackground
+    source={image}
+    style={styles.backgroundImage}
+    resizeMode="cover"
+      >
+    <CircularMenu setGameInfo={setGameInfo} itemParams={itemParams} completed={completed}/>
+    <InfoBottomsheet
+      key={gameInfo}
+      currentGameInfo={gameInfo}
+      setCurrentGameInfo={setGameInfo}
+    />
+    </ImageBackground>
+  </SafeAreaView>
+  )
+}
 
 
 const App = () => {
