@@ -31,7 +31,7 @@ export default function ScrolableHorizontal(){
           "cards": ["+2","+3","+1","+2","+2","+5","+7"],
           "expectedValues": [6,4,12],
           "titles": [
-  '          Tworzenie testów jednostkowych dla nowo dodanych funkcji.',
+            'Tworzenie testów jednostkowych dla nowo dodanych funkcji.',
             'Aktualizacja istniejących testów.',
             'Łączenie aplikacji z zewnętrznym API.',
             'Przeprowadzanie testów integracyjnych.',
@@ -43,15 +43,13 @@ export default function ScrolableHorizontal(){
       }
     const params = useLocalSearchParams();
     const player_id:number = params.player_id;
-    console.log(player_id);
-    const other_player_id = (player_id === 1 ? 1 : 2);
-    console.log(other_player_id);
+    const other_player_id = (player_id === 1 ? 2 : 1);
     const card_models_h = []
     for (let i = 0; i < 7; i++) {
         card_models_h.push(new CardModel(
-            board_data[1]["titles"][i],
+            i.toString(),
             "card_deck",
-            board_data[1]["titles"][i],
+            board_data[other_player_id]["titles"][i],
             board_data[other_player_id]["cards"][i],
             board_data[other_player_id]["cards"][i],
             [],
@@ -72,11 +70,11 @@ export default function ScrolableHorizontal(){
     const cards = []
     for (let i = 0; i < 7; i++) {
         cards.push(new CardModel(
-            board_data[1]["titles"][i],
+            i.toString(),
             "card_deck",
-            board_data[1]["titles"][i],
+            board_data[player_id]["titles"][i],
             "",
-            board_data[1]["cards"][i],
+            board_data[player_id]["cards"][i],
             [],
             null,
             1
@@ -130,7 +128,14 @@ export default function ScrolableHorizontal(){
     }
     return(
     <ScrollView>   
-        <Text>Karty Drugiego Gracza</Text>
+        <Text style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            marginTop: 20,
+            marginBottom: 20
+        
+        }}>Karty Drugiego Gracza</Text>
         <ScrollView horizontal={true} style={{flex: 1}}>
             {cards_h}
         </ScrollView>
