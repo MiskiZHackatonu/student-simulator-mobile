@@ -9,6 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Gesture, GestureDetector, GestureHandlerRootView} from 'react-native-gesture-handler'
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 
@@ -25,10 +26,15 @@ export default function RootLayout() {
     const load = async () => {
       if (loaded) {
         // If nick is not set, we have to show onboarding screen
-        const nick = await AsyncStorage.getItem("nick");
+        const storedNick = await AsyncStorage.getItem("nick");
 
-        if (true) {
-          router.replace("/games");
+        if (storedNick) {
+          router.replace({
+            pathname: "/games",
+            params: {
+              nick: storedNick,
+            },
+          });
         } else {
           router.replace("/onboarding");
         }
@@ -45,13 +51,15 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          animation: "none",
-        }}
-      />
-    </ThemeProvider>
+    <GestureHandlerRootView>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            animation: "none",
+          }}
+        />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
