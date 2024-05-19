@@ -6,7 +6,6 @@ import CircularMenu from "@/components/CircularMenu";
 import QRButton from "@/components/QRButton";
 import { AllGamesContext } from "./_layout";
 
-// const completed = new Set()
 
 const { width, height } = Dimensions.get('window');
 const s1_image = require('./../../assets/images/wydzial.jpg')
