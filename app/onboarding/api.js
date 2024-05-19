@@ -48,7 +48,7 @@ export async function matchmaking(lobbyId, userId) {
   }
 }
 
-export async function setScore (userId, gameId, score) {
+export async function setScore (userId, gameId) {
   var responseBody = await fetchMessage(setScoreUrl, {userId: userId, gameId: gameId});
   if (responseBody.error) {
     Alert.alert('Connection Error', responseBody.message);
@@ -59,7 +59,7 @@ export async function setScore (userId, gameId, score) {
   }
 }
 
-export async function games6Solved (userId, gameId, solved) {
+export async function games6Solved (userId, gameId) {
   var responseBody = await fetchMessage(games6SolvedUrl, {userId: userId, gameId: gameId});
   if (responseBody.error) {
     Alert.alert('Connection Error', responseBody.message);
