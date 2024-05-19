@@ -11,6 +11,9 @@ type Props = {
 export class Badge extends Component<Props> {
   render() {
     const { value, backgroundColor, badgeStyle, textStyle } = this.props;
+
+    console.log("Badge value: " + backgroundColor)
+
     const color = backgroundColor || '#000000';
 
     return (

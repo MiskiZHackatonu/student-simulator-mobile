@@ -220,13 +220,16 @@ export default Column;
 
 const styles = StyleSheet.create({
   columnContainer: {
+
     backgroundColor: '#84ACCE',
+
     borderRadius: 8,
     padding: 8
   },
   columnHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+
     marginBottom: 24,
     backgroundColor:'#84ACCE'
   },
@@ -234,6 +237,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333333'
+
   },
   columnHeaderRightContainer: {
   },

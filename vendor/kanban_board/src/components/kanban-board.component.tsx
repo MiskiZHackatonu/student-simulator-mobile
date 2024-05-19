@@ -226,7 +226,6 @@ class KanbanBoard extends React.Component<Props, State> {
       y: this.state.startingY - draggedItemHeight / 2
     });
 
-
     item!.hide(); // hide this item so we can display the 'dragged' item over it
     this.setState({
       movingMode: true,

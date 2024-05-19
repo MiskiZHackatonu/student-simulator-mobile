@@ -1,5 +1,11 @@
 import { Stack } from "expo-router";
 
-const StackNavigator = () => <Stack />;
+const StackNavigator = () => (
+  <Stack
+    screenOptions={{
+      headerShown: true,
+    }}
+  />
+);
 
 export default StackNavigator;
