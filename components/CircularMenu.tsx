@@ -1,20 +1,13 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-const CircularMenu = ({setGameInfo}) => {
+const CircularMenu = ({setGameInfo, itemParams}) => {
     const [containerLayout, setContainerLayout] = useState({x: 0, y: 0, width: 200, height: 200});
     const onLayout= (event) => {
         setContainerLayout(event.nativeEvent.layout)
         console.log(`${containerLayout.x} ${containerLayout.y} ${containerLayout.width} ${containerLayout.height} pressed`)
     }
-
-    const itemParams = [
-        {rad: containerLayout.width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
-        {rad: containerLayout.width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
-        {rad: containerLayout.width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
-        {rad: containerLayout.width / 10, ang: 20, pos_rad: 120, label: "SYSOPY", backgroundColor: 'green'},
-
-    ]
+    
     const center = {x: containerLayout.width / 2, y: containerLayout.height / 2}
     const itemProps = itemParams.map((params, index) => ({
         width: params.rad * 2, 

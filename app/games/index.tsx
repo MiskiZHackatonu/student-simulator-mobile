@@ -8,44 +8,55 @@ import QRButton from "@/components/QRButton";
 
 const { width, height } = Dimensions.get('window');
 
-const imageXD = {uri: 'https://legacy.reactjs.org/logo-og.png'};
+const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
+  return (
+    <SafeAreaView style={styles.item}>
+    <ImageBackground
+    source={image}
+    style={styles.backgroundImage}
+    resizeMode="cover"
+      >
+    <CircularMenu setGameInfo={setGameInfo} itemParams={itemParams}/>
+    <InfoBottomsheet
+      key={gameInfo}
+      currentGameInfo={gameInfo}
+      setCurrentGameInfo={setGameInfo}
+    />
+    </ImageBackground>
+  </SafeAreaView>
+  )
+}
 
-const DATA = [
-  { id: '1', title: 'Page 1' },
-  { id: '2', title: 'Page 2' },
-  { id: '3', title: 'Page 3' },
-  { id: '4', title: 'Page 4' },
-];
+const s1_image = require('./../../assets/images/wydzial.jpg')
+const s1_itemParams = [
+  {rad: width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
+  {rad: width / 10, ang: 20, pos_rad: 120, label: "SYSOPY", backgroundColor: 'green'}
+]
 
-const GamesList = () => {
+const s2_image = require('./../../assets/images/wydzial.jpg')
+const s2_itemParams = [
+  {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
+  {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
+]
+
+const data = [
+  {image: s1_image, params: s1_itemParams}, 
+  {image: s2_image, params: s2_itemParams}
+]
+
+
+const App = () => {
   const [gameInfo, setGameInfo] = useState("None");
 
   return (
     <SafeAreaView style={styles.item}>
-      <ImageBackground
-      source={{uri: 'https://legacy.reactjs.org/logo-og.png'}}
-      style={styles.backgroundImage}
-      resizeMode="cover"
-        >
-      <CircularMenu setGameInfo={setGameInfo} />
-      <InfoBottomsheet
-        key={gameInfo}
-        currentGameInfo={gameInfo}
-        setCurrentGameInfo={setGameInfo}
-      />
-      </ImageBackground>
-    </SafeAreaView>
-    
-  );
-};
-
-const App = () => {
-  return (
-    <SafeAreaView style={styles.item}>
     <FlatList
-      data={DATA}
-      renderItem={({ item }) => <GamesList/>}
-      keyExtractor={item => item.id}
+      data={data}
+      renderItem={({ item }) => <Screen 
+        gameInfo = {gameInfo} 
+        setGameInfo={setGameInfo} 
+        itemParams={item.params} 
+        image={item.image}/>}
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={true}
