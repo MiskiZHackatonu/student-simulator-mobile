@@ -33,8 +33,7 @@ type ParamList = {
 };
 
 const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
-
-  const {completed, setCompleted} = useContext(AllGamesContext)
+  const {completed} = useContext(AllGamesContext)
 
   return (
     <SafeAreaView style={styles.item}>
@@ -61,6 +60,9 @@ const App = () => {
   const { nick } = route.params;
   const navigation = useNavigation();
 
+  const {setNick} = useContext(AllGamesContext)
+  setNick(nick);
+
 
   // const handleGameClick = (gameName: string) => {
   //   if (games.includes(gameName)) {
@@ -76,6 +78,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    console.log(`got nick ${nick}`);
     navigation.setOptions({
       headerTitle: () => (
         <ThemedText>Welcome, {nick}!</ThemedText>
