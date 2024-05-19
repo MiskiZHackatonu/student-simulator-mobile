@@ -99,10 +99,10 @@ const App = () => {
     <View>
       <Image style={{ 
         height: height, 
-        width: width * 2.4, 
+        width: width * 2.5, 
         position: 'absolute', 
-        top:0, 
-        left:backgroundOffset - width / 2}} 
+        top:-50, 
+        left:backgroundOffset - width / 1.4}} 
         source={background_wiet} />
     </View>
     <FlatList
