@@ -15,16 +15,19 @@ const answer = [
 ];
 
 export default function Q3() {
-  const {setCompleted} = useContext(AllGamesContext)
+  const { setCompleted } = useContext(AllGamesContext);
 
   return (
     <ExamQuestion
       onNext={() => {
         Alert.alert("Gratulacje!", "Udało Ci się ukończyć grę!");
         // completed.add("BAZY")
-        setCompleted(completed => [...completed, "BAZY"] )
-        console.log("BAZY COMPLETED")
+        setCompleted((completed) => [...completed, "BAZY"]);
+        console.log("BAZY COMPLETED");
         router.replace("/games");
+        while (router.canGoBack()) {
+          router.back();
+        }
       }}
       question="Pytanie 3: Masz tabelę 'Zamówienia' z kolumnami 'IdZamowienia', 'NazwaProduktu' i 'Cena'. Napisz polecenie SQL, które zaktualizuje cenę produktu o IdZamowienia = 20."
       validSequence={answer}

@@ -15,6 +15,15 @@ const StackNavigator = () => {
     >
       <Stack>
         <Stack.Screen
+          name="index"
+          options={{
+            title: "Gra",
+            headerStyle: {
+              backgroundColor: "rgb(160,172,38)",
+            },
+          }}
+        />
+        <Stack.Screen
           name="qrCamera"
           options={{
             presentation: "modal",
