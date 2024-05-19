@@ -46,6 +46,7 @@ export async function matchmaking(lobbyId, userId) {
     Alert.alert('Success', 'Matchmaking successful');
     console.log('Matchmaking successful');
   }
+  return responseBody.id;
 }
 
 export async function setScore (userId, gameId) {
