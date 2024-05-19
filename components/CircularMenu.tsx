@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0', 
   },
   menuItem: {
     position: 'absolute',
