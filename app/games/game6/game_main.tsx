@@ -4,13 +4,11 @@ import { KanbanBoard, ColumnModel, CardModel } from '@/vendor/kanban_board/src';
 import Card from '@/vendor/kanban_board/src/components/cards/card.component';
 import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
 import { ScrollView } from 'react-native-gesture-handler';
+import {games6Solved} from "@/app/onboarding/api";
 
 export default function ScrolableHorizontal(){
-    
-    
-    
     const onCardPress = (card: CardModel) => {
-        Alert.alert(`Card '${card.title}' pressed`);
+       
       }
     
     const  board_data = {
@@ -43,7 +41,7 @@ export default function ScrolableHorizontal(){
       }
     const params = useLocalSearchParams();
     const player_id:number = params.player_id;
-    const other_player_id = player_id == 1 ? 2 : 1;
+    const other_player_id = (player_id == 1 ? 2 : 1);
     const card_models_h = []
     for (let i = 0; i < 7; i++) {
         card_models_h.push(new CardModel(
@@ -80,14 +78,17 @@ export default function ScrolableHorizontal(){
             1
           ));
     }
-    cards[0].columnId
-    const onCardDragEnd = (srcColumn: ColumnModel, destColumn: ColumnModel, item: CardModel, cardIdx: number) => {
-        const results = board_data[player_id]["baseValues"];
+    const onCardDragEnd = async (srcColumn: ColumnModel, destColumn: ColumnModel, item: CardModel, cardIdx: number) => {
+        const results = [0,0,0];
         var column = 0;
-        for (const item in cards){
-            const operation = item.description?.charAt(0);
-            const value = parseInt(item.description?.substring(1) ?? '0');
-            switch (cards[0].columnId){
+        
+        for (let i = 0; i < cards.length; i++){
+            const operation = cards[i].description?.charAt(0);
+            const value = parseInt(cards[i].description?.substring(1) ?? '0');
+            // console.log(operation);
+            // console.log(value);
+            // console.log(cards[i].columnId);
+            switch (cards[i].columnId){
                 case "card_deck":
                     column = 4;
                     break;
@@ -118,11 +119,14 @@ export default function ScrolableHorizontal(){
                 results[column] += value;
                 break;
                 default:
-                results[column] += value;
                 break;
             }
         }
+        console.log(results);
         if (results[0] === board_data[player_id]["expectedValues"][0] && results[1] === board_data[player_id]["expectedValues"][1] && results[2] === board_data[player_id]["expectedValues"][2]){
+            console.log("Solved!");
+            await games6Solved("bartek",params.lobby_id)
+            console.log("Gratulacje! Wygrałeś!");
             Alert.alert("Gratulacje! Wygrałeś!");
         }
     }
@@ -144,7 +148,7 @@ export default function ScrolableHorizontal(){
         <KanbanBoard
               columns={columns}
               cards={cards}
-              onDragEnd={(srcColumn, destColumn, item, targetIdx) => onCardDragEnd(srcColumn, destColumn, item, targetIdx)}
+              onDragEnd={(srcColumn, destColumn, item, targetIdx) =>  onCardDragEnd(srcColumn, destColumn, item, targetIdx)}
               onCardPress={(item) => onCardPress(item)}
               style={styles.kanbanStyle}
               />
