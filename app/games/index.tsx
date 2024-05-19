@@ -18,7 +18,7 @@ const s1_itemParams = [
   {
     rad: width / 5,
     ang: 10,
-    pos_rad: 50,
+    pos_rad: 10,
     label: "BAZY",
     backgroundColor: "blue",
   },
@@ -26,32 +26,21 @@ const s1_itemParams = [
     rad: width / 10,
     ang: 10.05,
     pos_rad: 170,
-    label: "SYSOPY",
+    label: "ASD",
     backgroundColor: "green",
   },
 ];
 const s2_itemParams = [
-  {
-    rad: width / 6,
-    ang: 50,
-    pos_rad: 100,
-    label: "UNIX",
-    backgroundColor: "yellow",
-  },
-  {
-    rad: width / 8,
-    ang: 110,
-    pos_rad: 100,
-    label: "IO",
-    backgroundColor: "red",
-  },
-];
+  {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
+  {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
+]
+
 
 const useless_items = [
   {
     rad: width / 6,
     ang: 4,
-    pos_rad: -100,
+    pos_rad: -250,
     label: "NON_CLICKABLE",
     backgroundColor: "purple",
   },
@@ -65,28 +54,28 @@ const useless_items = [
   {
     rad: width / 4,
     ang: 4.5,
-    pos_rad: 210,
+    pos_rad: 200,
     label: "NON_CLICKABLE",
     backgroundColor: "#000080",
   },
   {
     rad: width / 12,
     ang: 5.10,
-    pos_rad: 220,
+    pos_rad: 230,
     label: "NON_CLICKABLE",
     backgroundColor: "darkviolet",
   },
   {
     rad: width / 18,
     ang: 5.33,
-    pos_rad: 300,
+    pos_rad: 350,
     label: "NON_CLICKABLE",
     backgroundColor: "#AA336A",
   },
   {
     rad: width / 10,
     ang: 2.5,
-    pos_rad: 125,
+    pos_rad: 150,
     label: "NON_CLICKABLE",
     backgroundColor: "cyan",
   }
@@ -150,7 +139,9 @@ const App = () => {
   useEffect(() => {
     console.log(`got nick ${nick}`);
     navigation.setOptions({
-      headerTitle: () => <ThemedText>Welcome, {nick}!</ThemedText>,
+      headerTitle: () => (
+        <ThemedText>Welcome, {nick}!</ThemedText>
+      ),
       headerRight: () => (
         <Pressable onPress={logOut}>
           <ThemedText>Logout</ThemedText>
@@ -164,10 +155,10 @@ const App = () => {
     <View>
       <Image style={{ 
         height: height, 
-        width: width * 2.5, 
+        width: width * 3, 
         position: 'absolute', 
         top:-50, 
-        left:backgroundOffset - width / 1.4}} 
+        left:backgroundOffset - width / 2 - 250}} 
         source={background_wiet} />
     </View>
     <FlatList
@@ -207,28 +198,28 @@ const App = () => {
 const styles = StyleSheet.create({
   item: {
     width,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
   },
   title: {
     fontSize: 32,
   },
   backgroundImage: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover'
   },
   text: {
-    color: "white",
+    color: 'white',
     fontSize: 42,
     lineHeight: 84,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000c0",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#000000c0',
   },
 });
 
