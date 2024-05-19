@@ -5,10 +5,11 @@ export const AllGamesContext = createContext({})
 
 const StackNavigator = () => {
   const [completed, setCompleted] = useState([])
+  const [nick, setNick] = useState("Unknown")
   
   return(
    <AllGamesContext.Provider value={{
-    completed, setCompleted
+    completed, setCompleted, nick, setNick
    }}>
   <Stack>
     <Stack.Screen
