@@ -5,7 +5,7 @@ const StackNavigator = () => (
     <Stack.Screen
           name="index"
           options={{
-            headerShown: false,
+            headerShown: true,
           }}
     />
     <Stack.Screen

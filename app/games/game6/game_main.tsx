@@ -125,7 +125,7 @@ export default function ScrolableHorizontal(){
         console.log(results);
         if (results[0] === board_data[player_id]["expectedValues"][0] && results[1] === board_data[player_id]["expectedValues"][1] && results[2] === board_data[player_id]["expectedValues"][2]){
             console.log("Solved!");
-            await games6Solved("bartek",params.lobby_id)
+            await games6Solved(params.lobby_id,"bartek")
             console.log("Gratulacje! Wygrałeś!");
             Alert.alert("Gratulacje! Wygrałeś!");
         }
