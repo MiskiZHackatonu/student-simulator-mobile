@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View, ThemedText} from "react-native";
 import React, { useEffect } from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -12,12 +12,52 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 const MAX_TRANSLATE_Y = SCREEN_HEIGHT / 1.5;
 const MIN_TRANSLATE_Y = SCREEN_HEIGHT / 5;
 
+// const gameInfo = {
+//   UNIX: { title: "UNIX", desc: "sdhlfkashdfjaslkdfhlakef" },
+//   IO: { title: "IO", desc: "sdhlfkashdfjaslkdfhlakef" },
+//   BAZY: { title: "BAZY", desc: "sdhlfkashdfjaslkdfhlakef" },
+//   SYSOPY: { title: "SYSOPY", desc: "sdhlfkashdfjaslkdfhlakef" },
+// };
+
+// const unix_title = () => {
+//     return (<ThemedText
+//     style={{
+//       marginTop: 90,
+//       textAlign: "center",
+//     }}
+//     type="title"
+//   >
+//     Semestr 3 - bazy danych
+//   </ThemedText>)
+// }
+
 const gameInfo = {
-  UNIX: { title: "UNIX", desc: "sdhlfkashdfjaslkdfhlakef" },
-  IO: { title: "IO", desc: "sdhlfkashdfjaslkdfhlakef" },
-  BAZY: { title: "BAZY", desc: "sdhlfkashdfjaslkdfhlakef" },
-  SYSOPY: { title: "SYSOPY", desc: "sdhlfkashdfjaslkdfhlakef" },
-};
+    BAZY: { 
+        title: "Semestr 3 - bazy danych",
+        desc: 
+        "Znajdujesz się na semestrze trzecim, gdzie do zdania masz przedmiot \
+        Bazy danych! W tym roku aby zaliczyć przedmiot należy napisać \
+        kolokwium zaliczeniowe. Dostaniesz trzy pytania z zakresu SQL - dla \
+        każdego z nich musiz poprawnie ułożyć zapytanie SQL. Niestety twoj \
+        wiedza jest zerowa - nic dziwnego, przecież nic się nie uczyłeś cały \
+        semestr a dopiero 2h przed terminem ogarnąłeś że masz kolosa. \
+        Dodatkowo to kolokwium musisz niestety napisać na 100%. Na szczęście \
+        prowadzący czasami wychodzi z sali, a więc masz szansę na pomoc od \
+        kolegów - podejdź do nich skanując kod QR i skorzystaj z ich wiedzy!" 
+    },
+    IO: { 
+        title: "IO", 
+        desc: 
+        "sdhlfkashdfjaslkdfhlakef" },
+    UNIX: { 
+        title: "BAZY",
+        desc: "sdhlfkashdfjaslkdfhlakef" 
+    },
+    SYSOPY: { 
+        title: "SYSOPY", 
+        desc: "sdhlfkashdfjaslkdfhlakef" 
+    },
+  };
 
 export default function Bottomsheet({ currentGameInfo, setCurrentGameInfo }) {
   const translateY = useSharedValue(0);
