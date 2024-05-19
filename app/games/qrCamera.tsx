@@ -27,27 +27,26 @@ const NewWordsMap = {
 };
 
 export default function QrCamera() {
-  const { wordBank, setWordBank, foundHelps, setFoundHelps } =
-    useContext(Game3Context);
+  // const { wordBank, setWordBank, foundHelps, setFoundHelps } =
+    // useContext(Game3Context);
 
-  const [runOnlyOnce, setRunOnlyOnce] = useState(false);
+  // const [runOnlyOnce, setRunOnlyOnce] = useState(false);
 
   return (
     <Camera
       onBarcodeScanned={async (e: BarcodeScanningResult) => {
-        if (foundHelps.includes(e.data)) {
-          return;
-        } else {
-          setFoundHelps?.([...foundHelps, e.data]);
+        console.log(`got ${e.data}`)
+        if (e.data == "game1") {
+          router.replace("/games/game1")
+        } else if (e.data == "game2") {
+          router.replace("/games/game2")
+        } else if (e.data == "game3") {
+          router.replace("/games/game3")
         }
-
-        if (runOnlyOnce || !(e.data in NewWordsMap)) return;
-
-        // @ts-ignore
-        setWordBank?.([...wordBank, ...NewWordsMap[e.data]]);
-
-        router.replace(`/games/game3/${e.data.toLowerCase().replace("_", "")}`);
-        setRunOnlyOnce(true);
+        else {
+          router.replace("/games")
+        }
+        // setRunOnlyOnce(true);
       }}
     />
   );
