@@ -1,56 +1,104 @@
-import { View, Text, Button, TextInput} from "react-native";
+import { View, TextInput, SafeAreaView, Pressable, Alert } from "react-native";
 import React, { useState } from "react";
-export default function TutorialPage(){
-    const [answer, setAnswer] = useState("")
-    const [result, setResult] = useState(0)
-    return (
-        <View>
-            <View>
-                <Text>
-                    Witaj w tutorialu obsługi terminala Unixowego.
-                </Text>
-            </View>
-            <View>
-                <Text>
-                    W grze będziesz poruszał się po terminalu komendami Unixowymi.{"\n"}
-                    Przydadtne komendy:{"\n"}
-                    ls - wyświetla zawartość bieżącego katalogu{"\n"}
-                    cd [nazwa katalogu] - zmienia katalog{"\n"}
-                    np. cd Documents{"\n"} - przechodzi do katalogu Documents{"\n"}
-                    cat [nazwa pliku] - wyświetla zawartość pliku{"\n"}
-                    np cat plik.txt{"\n"} - wyświetla zawartość pliku file.txt{"\n"}
-                </Text>
-            </View>
-            <View>
-                <Text>Podaj 4 słowo w Części I zadaniu 1a</Text>
-                <View>
-                    <TextInput
-                    value={answer}
-                    onChangeText={setAnswer}/>
+import { ThemedText } from "@/components/ThemedText";
+import { router } from "expo-router";
 
-                </View>
-                <View>
-                    <Button title="Sprawdź odpowiedź" onPress={() => {
-                        if(AnswerValidation(answer)){
-                            setResult(1)
-                        }else{
-                            setResult(2)
-                        }
-                    }} />
-                {result === 0 ? <Text></Text> : result === 1 ? <Text>Poprawna odpowiedź</Text>:<Text>Błedna odpowiedź</Text>}
-                </View>
-            </View>
+export default function TutorialPage() {
+  const [answer, setAnswer] = useState("");
+  const [result, setResult] = useState(0);
+
+  return (
+    <SafeAreaView>
+      <View>
+        <ThemedText
+          style={{
+            marginTop: 30,
+            textAlign: "center",
+          }}
+          type="title"
+        >
+          UNIX - wstęp do obsługi terminala
+        </ThemedText>
+      </View>
+      <View
+        style={{
+          marginTop: 40,
+          marginRight: "auto",
+          marginLeft: "auto",
+        }}
+      >
+        <ThemedText>
+          W grze będziesz poruszał się po terminalu komendami Unixowymi.{"\n"}
+          {"\n"}
+          Przydadtne komendy:{"\n"}
+          {"\t"}• ls - wyświetla zawartość bieżącego katalogu {"\n"}
+          {"\t"}• cd [nazwa katalogu] - zmienia katalog{"\n"}
+          {"\t"}• cat [nazwa pliku] - wyświetla zawartość pliku{"\n"}
+        </ThemedText>
+      </View>
+      <View>
+        <ThemedText
+          style={{ marginRight: "auto", marginLeft: "auto", marginTop: 40 }}
+        >
+          Podaj 4 słowo w Części I w zadaniu 1a
+        </ThemedText>
+        <TextInput
+          style={{
+            height: 40,
+            borderColor: "gray",
+            borderWidth: 1,
+            marginTop: 10,
+            marginRight: "auto",
+            marginLeft: "auto",
+            minWidth: "50%",
+            padding: 8,
+          }}
+          placeholder="Odpowiedź"
+          value={answer}
+          onChangeText={(text) => setAnswer(text)}
+        />
+        <View>
+          <Pressable
+            onPress={() => {
+              if (AnswerValidation(answer)) {
+                setResult(1);
+                Alert.alert("Poprawna odpowiedź", "Gratulacje", [
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      router.replace("/games");
+                    },
+                  },
+                ]);
+              } else {
+                setResult(2);
+                Alert.alert("Błędna odpowiedź", "Spróbuj ponownie");
+              }
+            }}
+          >
+            <ThemedText
+              style={{
+                marginTop: "40%",
+                fontSize: 22,
+                textAlign: "center",
+              }}
+              type="link"
+            >
+              Sprawdź odpowiedź
+            </ThemedText>
+          </Pressable>
         </View>
-    )
+      </View>
+    </SafeAreaView>
+  );
 }
 // Część I: Pytania teoretyczne
 
 //     1. Historia systemu UNIX
 //         a) Kiedy i przez kogo został stworzony system UNIX?
-function AnswerValidation(answer: string){
-    console.log(answer)
-    if(answer === "kogo"){
-      return true 
-    }
-    return false
+function AnswerValidation(answer: string) {
+  if (answer.toLowerCase() === "kogo") {
+    return true;
   }
+  return false;
+}
