@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Gesture, GestureDetector, GestureHandlerRootView} from 'react-native-gesture-handler'
-
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.

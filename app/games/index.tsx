@@ -1,11 +1,13 @@
 import { router } from "expo-router";
-import React, { useState, useContext } from "react";
-import { SafeAreaView, StyleSheet, FlatList, Dimensions, ImageBackground, Text, View} from "react-native";
+import React, { useState, useCallback, useEffect, useContext } from "react";
+import { SafeAreaView, StyleSheet, FlatList, Dimensions, ImageBackground, Text, View, Pressable } from "react-native";
 import InfoBottomsheet from "@/components/InfoBottomsheet";
 import CircularMenu from "@/components/CircularMenu";
 import QRButton from "@/components/QRButton";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AllGamesContext } from "./_layout";
-
+import { ThemedText } from "@/components/ThemedText";
 
 const { width, height } = Dimensions.get('window');
 const s1_image = require('./../../assets/images/wydzial.jpg')
@@ -24,6 +26,11 @@ const data = [
   {image: s1_image, params: s1_itemParams}, 
   {image: s2_image, params: s2_itemParams}
 ]
+type ParamList = {
+  params: {
+    nick: string;
+  };
+};
 
 const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
 
@@ -50,6 +57,36 @@ const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
 
 const App = () => {
   const [gameInfo, setGameInfo] = useState("None");
+  const route = useRoute<RouteProp<ParamList, 'params'>>();
+  const { nick } = route.params;
+  const navigation = useNavigation();
+
+
+  // const handleGameClick = (gameName: string) => {
+  //   if (games.includes(gameName)) {
+  //     router.push(`/games/${gameName.toLowerCase().replace(" ", "")}`);
+  //   }
+  // };
+
+  const logOut = useCallback(async () => {
+    await AsyncStorage.removeItem("nick");
+    router.replace({
+      pathname: "/games/game6",
+    });
+  }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <ThemedText>Welcome, {nick}!</ThemedText>
+      ),
+      headerRight: () => (
+        <Pressable onPress={logOut}>
+          <ThemedText>Logout</ThemedText>
+        </Pressable>
+      ),
+    });
+  }, [navigation, logOut, nick]);
 
   return (
     <SafeAreaView style={styles.item}>
@@ -94,8 +131,6 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    width,
-    height,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
