@@ -19,6 +19,12 @@ const DATA = [
   { id: '4', title: 'Page 4' },
 ];
 
+type ParamList = {
+  params: {
+    nick: string;
+  };
+};
+
 const GamesList = () => {
   const [gameInfo, setGameInfo] = useState("None");
   const route = useRoute<RouteProp<ParamList, 'params'>>();
