@@ -48,14 +48,35 @@ const gameInfo = {
     IO: { 
         title: "IO", 
         desc: 
-        "sdhlfkashdfjaslkdfhlakef" },
+        "Inżyniekra pisze sie pełną parą, a twój promotor nagle wymyślił sobie zmiane platformy do zarządzania projektem. \
+        Software ten zapewnia Zwiększenie współpracy i synergii w celu optymalizacji procesów oraz osiągnięcia wspólnych celów strategicznych \
+        poprzez ukrywanie części informacji między użytkownikami zmuszając ich do większej kominukacji. \
+        Toim celem jest przeniesienie ze projektu na nowego kandama z pomocą drugiego gracza."
+    },
     UNIX: { 
-        title: "BAZY",
-        desc: "sdhlfkashdfjaslkdfhlakef" 
+        title: "UNIX",
+        desc:
+        "Znajdujesz się na semestrze drugim, gdzie do zdania masz przedmiot \
+        Algorytmy i Struktury Danych! W tym roku aby zaliczyć przedmiot \
+        należy napisać prosty algorytm. Po wejściu zobaczysz mapę AGH oraz studenta, \
+        który wraca z piątkowych zajęć. Twoim zadaniem jest napisać algorytm, \
+        dzięki czemu student dojdzie do akademika. Pamiętaj, że zbliża się weekend, \
+        dlatego aby algorytm był poprawny, student musi po drodzę zebrać wszystkie \
+        butelki piwa! Niestety twoja wiedza algorytmiczna jest zerowa - nic dziwnego, \
+        przecież nie ma co się uczyć w trakcie semestru. Na szczęście możesz znaleźć \
+        porozrzucane kody QR po sali, dzięki czemu skanując je, poznasz \
+        bloczkowe procedury, dzięki czemu będziesz w stanie napisać algorytm! "
     },
     SYSOPY: { 
         title: "SYSOPY", 
-        desc: "sdhlfkashdfjaslkdfhlakef" 
+        desc: 
+        "Zbliża sie termin poprawkowy egzaminu z Unixów, a Ty nie masz pojęcia \
+        o co chodzi. Twoi koledzy tak samo jak Ty nie przykładali się do \
+        nauki. Już nie masz szans nauczyć się wszystkiego na pamięć, zostało \
+        Ci tylko jedno wyjście - włamanie do systemu uczelni i zmiana zdobycie \
+        pytań na egzamin. Twoim zadaniem jest poruszanoe sie po terminalu \
+        komendami Unixowymi i odnalezienie pytań na egzamin poprawkowy. Twoi \
+        znajomi z roku liczą na Ciebie, nie zawiedź ich!" 
     },
   };
 
