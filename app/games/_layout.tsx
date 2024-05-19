@@ -25,6 +25,9 @@ const StackNavigator = () => {
           name="index"
           options={{
             headerShown: true,
+            headerStyle: {
+              backgroundColor: "#13447e",
+            },
           }}
         />
         <Stack.Screen

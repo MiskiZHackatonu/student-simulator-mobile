@@ -208,10 +208,24 @@ const App = () => {
   useEffect(() => {
     console.log(`got nick ${nick}`);
     navigation.setOptions({
-      headerTitle: () => <ThemedText>Welcome, {nick}!</ThemedText>,
+      headerTitle: () => (
+        <ThemedText
+          style={{
+            color: "white",
+          }}
+        >
+          Welcome, {nick}!
+        </ThemedText>
+      ),
       headerRight: () => (
         <Pressable onPress={logOut}>
-          <ThemedText>Logout</ThemedText>
+          <ThemedText
+            style={{
+              color: "white",
+            }}
+          >
+            Logout
+          </ThemedText>
         </Pressable>
       ),
     });
