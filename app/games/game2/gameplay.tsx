@@ -24,8 +24,8 @@ const { width, height } = Dimensions.get("window");
 const GRID_COLUMNS = 8; // Liczba kolumn
 const SQUARE_SIZE = Math.floor(width / GRID_COLUMNS); // Rozmiar kwadratu
 const GRID_ROWS = 8; // Liczba wierszy
+let maxBeer = 3;
 let collectedBeer = 0;
-let maxBeer = 0;
 
 export default function Gameplay() {
   const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
@@ -152,7 +152,7 @@ export default function Gameplay() {
     setPlayerPosition({ row: newRow, col: newCol });
 
     if (isEnd) {
-      if (collectedBeer === maxBeer) {
+      if (collectedBeer >= maxBeer) {
         console.log("Przeszedłeś");
         Alert.alert("Gratulacje!", "Przeszedłeś poziom!", [
           {
@@ -167,7 +167,7 @@ export default function Gameplay() {
           },
         ]);
       } else {
-        console.log("musisz zebrać piwa");
+        console.log("musisz zebrać piwa", collectedBeer, maxBeer);
         Alert.alert(
           "Informacja",
           "Musisz zebrać wszystkie piwa przed zakończeniem poziomu."
