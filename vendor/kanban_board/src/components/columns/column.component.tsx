@@ -135,7 +135,7 @@ export class Column extends React.Component<Props, State> {
 
     const items = boardState.columnCardsMap.has(column.id) ? boardState.columnCardsMap.get(column.id)! : [];
     const noOfItems = items.length;
-    var calcResult = column.baseValue;
+    var calcResult = 0;
     for (const item of items) {
       const operation = item.description?.charAt(0);
       const value = parseInt(item.description?.substring(1) ?? '0');
