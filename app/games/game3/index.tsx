@@ -1,17 +1,10 @@
-import {
-  View,
-  Text,
-  Button,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
-import React, { useState } from "react";
-import { router } from "expo-router";
+import { Pressable, ScrollView, StyleSheet } from "react-native";
+import React from "react";
 import { ThemedText } from "@/components/ThemedText";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
-export default function Index() {
+export default function Game3() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -31,7 +24,7 @@ export default function Index() {
           }}
           type="title"
         >
-          Semestr 1 - Unix
+          Semestr 3 - bazy danych
         </ThemedText>
         <ThemedText
           style={{
@@ -41,23 +34,25 @@ export default function Index() {
           }}
           type="default"
         >
-          Zbliża sie termin poprawkowy egzaminu z Unixów, a Ty nie masz pojęcia
-          o co chodzi. Twoi koledzy tak samo jak Ty nie przykładali się do
-          nauki. Już nie masz szans nauczyć się wszystkiego na pamięć, zostało
-          Ci tylko jedno wyjście - włamanie do systemu uczelni i zmiana zdobycie
-          pytań na egzamin. Twoim zadaniem jest poruszanoe sie po terminalu
-          komendami Unixowymi i odnalezienie pytań na egzamin poprawkowy. Twoi
-          znajomi z roku liczą na Ciebie, nie zawiedź ich!
+          Znajdujesz się na semestrze trzecim, gdzie do zdania masz przedmiot
+          Bazy danych! W tym roku aby zaliczyć przedmiot należy napisać
+          kolokwium zaliczeniowe. Dostaniesz trzy pytania z zakresu SQL - dla
+          każdego z nich musiz poprawnie ułożyć zapytanie SQL. Niestety twoja
+          wiedza jest zerowa - nic dziwnego, przecież nic się nie uczyłeś cały
+          semestr a dopiero 2h przed terminem ogarnąłeś że masz kolosa.
+          Dodatkowo to kolokwium musisz niestety napisać na 100%. Na szczęście
+          prowadzący czasami wychodzi z sali, a więc masz szansę na pomoc od
+          kolegów - podejdź do nich skanując kod QR i skorzystaj z ich wiedzy!
         </ThemedText>
-        <Pressable onPress={() => router.push("/games/game1/tutorial")}>
+        <Pressable onPress={() => router.push("/games/game3/q1")}>
           <ThemedText
             style={{
-              marginTop: "40%",
+              marginTop: "30%",
               fontSize: 22,
             }}
             type="link"
           >
-            Zaczynamy!
+            Czas start!
           </ThemedText>
         </Pressable>
       </ScrollView>
