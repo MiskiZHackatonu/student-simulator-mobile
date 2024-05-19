@@ -17,10 +17,17 @@ const StackNavigator = () => {
         <Stack.Screen
           name="index"
           options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="gameplay"
+          options={{
             title: "Gra",
             headerStyle: {
               backgroundColor: "rgb(160,172,38)",
             },
+            headerBackTitle: "Zasady",
           }}
         />
         <Stack.Screen
@@ -28,6 +35,7 @@ const StackNavigator = () => {
           options={{
             presentation: "modal",
             title: "Zeskanuj kod QR",
+            headerBackTitle: "Zasady",
           }}
         />
       </Stack>

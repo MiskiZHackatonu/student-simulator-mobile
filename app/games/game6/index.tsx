@@ -41,7 +41,7 @@ export default function Index() {
           }}
           type="default"
         >
-          Inżyniekra pisze sie pełną parą, a twój promotor nagle wymyślił sobie zmiane platformy do zarządzania projektem.
+          Inżynierka pisze sie pełną parą, a twój promotor nagle wymyślił sobie zmiane platformy do zarządzania projektem.
           Software ten zapewnia "Zwiększenie współpracy i synergii w celu optymalizacji procesów oraz osiągnięcia wspólnych celów strategicznych" poprzez ukrywanie części informacji między użytkownikami zmuszając ich do większej kominukacji.{'\n'}
           Toim celem jest przeniesienie ze projektu na nowego kandama z pomocą drugiego gracza.{'\n'}
         </ThemedText>
