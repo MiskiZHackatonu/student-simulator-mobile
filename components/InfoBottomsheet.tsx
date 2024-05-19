@@ -35,22 +35,22 @@ const gameInfo = {
     BAZY: { 
         title: "Semestr 3 - bazy danych",
         desc: 
-        "Znajdujesz się na semestrze trzecim, gdzie do zdania masz przedmiot \
-        Bazy danych! W tym roku aby zaliczyć przedmiot należy napisać \
-        kolokwium zaliczeniowe. Dostaniesz trzy pytania z zakresu SQL - dla \
-        każdego z nich musiz poprawnie ułożyć zapytanie SQL. Niestety twoj \
-        wiedza jest zerowa - nic dziwnego, przecież nic się nie uczyłeś cały \
-        semestr a dopiero 2h przed terminem ogarnąłeś że masz kolosa. \
-        Dodatkowo to kolokwium musisz niestety napisać na 100%. Na szczęście \
-        prowadzący czasami wychodzi z sali, a więc masz szansę na pomoc od \
-        kolegów - podejdź do nich skanując kod QR i skorzystaj z ich wiedzy!" 
+        "    Znajdujesz się na semestrze trzecim, gdzie do zdania masz przedmiot\
+Bazy danych! W tym roku aby zaliczyć przedmiot należy napisać \
+kolokwium zaliczeniowe. Dostaniesz trzy pytania z zakresu SQL - dla \
+każdego z nich musiz poprawnie ułożyć zapytanie SQL. Niestety twoj \
+wiedza jest zerowa - nic dziwnego, przecież nic się nie uczyłeś cały \
+semestr a dopiero 2h przed terminem ogarnąłeś że masz kolosa. \
+Dodatkowo to kolokwium musisz niestety napisać na 100%. Na szczęście \
+prowadzący czasami wychodzi z sali, a więc masz szansę na pomoc od \
+kolegów - podejdź do nich skanując kod QR i skorzystaj z ich wiedzy!" 
     },
     IO: { 
         title: "IO", 
         desc: 
         "sdhlfkashdfjaslkdfhlakef" },
     UNIX: { 
-        title: "BAZY",
+        title: "UNIX",
         desc: "sdhlfkashdfjaslkdfhlakef" 
     },
     SYSOPY: { 
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   bottomsheet_container: {
     width: "100%",
     height: SCREEN_HEIGHT,
-    backgroundColor: "#00f8",
+    backgroundColor: "#d9d9d9",
     position: "absolute",
     top: SCREEN_HEIGHT / 1.5,
     zIndex: 12000,
@@ -155,7 +155,8 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    textAlign: "center",
-    color: "#666",
+    textAlign: "justify",
+    color: "#84acce",
+    margin: 20,
   },
 });

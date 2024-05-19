@@ -14,6 +14,8 @@ export default function QrCamera() {
           router.replace("/games/game2")
         } else if (e.data == "game3") {
           router.replace("/games/game3")
+        } else if (e.data == "game6") {
+          router.replace("/games/game6")
         }
         else {
           router.replace("/games")
