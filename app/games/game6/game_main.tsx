@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, { useContext } from "react";
 import { View, Text, Alert, StyleSheet, StatusBar, Button } from 'react-native';
 import { KanbanBoard, ColumnModel, CardModel } from '@/vendor/kanban_board/src';
 import Card from '@/vendor/kanban_board/src/components/cards/card.component';
 import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
 import { ScrollView } from 'react-native-gesture-handler';
 import {games6Solved} from "@/app/onboarding/api";
+import { AllGamesContext } from "../_layout";
 
 export default function ScrolableHorizontal(){
     const {nick} = useContext(AllGamesContext)
