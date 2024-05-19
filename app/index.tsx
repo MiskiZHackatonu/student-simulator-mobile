@@ -14,10 +14,15 @@ export default function BootScreen() {
       if (permission?.granted) {
         // Redirect to the next screen
         // If nick is not set, we have to show onboarding screen
-        const nick = await AsyncStorage.getItem("nick");
+        const storedNick = await AsyncStorage.getItem("nick");
 
-        if (true) {
-          router.replace("/games");
+        if (storedNick) {
+          router.replace({
+            pathname: "/games",
+            params: {
+              nick: storedNick,
+            },
+          });
         } else {
           router.replace("/onboarding");
         }
