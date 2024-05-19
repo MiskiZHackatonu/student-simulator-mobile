@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Image, Button, Dimensions } from 'react-native';
 
+
 const mapobject = require("@/assets/ASDmap/map.json");
 const SQUARE_SIZE = 50; // Rozmiar kwadratu
 const GRID_COLUMNS = 12; // Liczba kolumn
 const GRID_ROWS = 8; // Liczba wierszy
+
 
 export default function Game2() {
     const [scriptBlocks, setScriptBlocks] = useState([]);
@@ -17,6 +19,7 @@ export default function Game2() {
     const [screenWidth, setScreenWidth] = useState(0);
     const [screenHeight, setScreenHeight] = useState(0);
     const [currentBlockId, setCurrentBlockId] = useState(null);
+
 
     useEffect(() => {
         loadMapData();
@@ -144,6 +147,7 @@ export default function Game2() {
                         {isPuddlePosition && <Image source={require('@/assets/images/puddle.png')} style={styles.bottomBlock} />}
                         {isWallPosition && <Image source={require('@/assets/images/wall.png')} style={styles.bottomBlock} />}
 
+
                         <Image source={require('@/assets/images/grass.png')} style={styles.image} />
                     </View>
                 );
@@ -155,6 +159,7 @@ export default function Game2() {
     const runSimulation = async () => {
         for (const block of scriptBlocks) {
             setCurrentBlockId(block.id); // Ustawianie aktualnie wykonywanego bloczka
+
             if (block.count !== undefined) {
                 for (let i = 0; i < block.count; i++) {
                     switch (block.type) {
@@ -170,6 +175,11 @@ export default function Game2() {
                         case 'Prawo':
                             movePlayer('Right');
                             break;
+                        case 'Powtórz':
+                            movePlayer('Right');
+                            for (let i = 0; i < block.count; i++){
+
+                            }
                         default:
                             break;
                     }
@@ -180,6 +190,7 @@ export default function Game2() {
             }
             await new Promise(resolve => setTimeout(resolve, 1000)); // Dodatkowa przerwa po każdym bloczku
         }
+
         setCurrentBlockId(null); // Zresetuj aktualnie wykonywany bloczek po zakończeniu
     };
 
@@ -215,7 +226,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+
         backgroundColor: 'rgb(160, 172, 38)', // Dodaj kolor tła tutaj, aby rozciągnął się na cały ekran
+
     },
     simulationArea: {
         flex: 3,
@@ -267,6 +280,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ddd',
         borderColor: '#bbb',
         borderWidth: 1,
+
         borderRadius: 5,
     },
     grid: {
@@ -278,6 +292,7 @@ const styles = StyleSheet.create({
     square: {
         width: SQUARE_SIZE,
         height: SQUARE_SIZE,
+
         borderWidth: 1,
         borderColor: '#999',
         position: 'relative',
@@ -303,3 +318,4 @@ const styles = StyleSheet.create({
 });
 
 export default Game2;
+
