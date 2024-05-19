@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Image, Button, Dimensions } from 'react-native';
+import React, { useState, useEffect} from 'react';
+import { Alert, StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Image, Button, Dimensions } from 'react-native';
 
 const mapobject = require("@/assets/ASDmap/map.json");
 
@@ -7,19 +7,24 @@ const { width, height } = Dimensions.get('window');
 const GRID_COLUMNS = 8; // Liczba kolumn
 const SQUARE_SIZE = Math.floor(width/GRID_COLUMNS); // Rozmiar kwadratu
 const GRID_ROWS = 8; // Liczba wierszy
+let collectedBeer = 0;
+let maxBeer = 0;
 
-export default function Game2() {
-    const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
-    const [playerPosition, setPlayerPosition] = useState({ row: 0, col: 0 });
-    const [endPosition, setEndPosition] = useState({ row: 3, col: 3 });
-    const [beer, setBeer] = useState<any[]>([]);
-    const [puddle, setPuddle] = useState<any[]>([]);
-    const [wall, setWall] = useState<any[]>([]);
-
-    useEffect(() =>{
-        loadMapData();
-    },[]);
-
+export default function Game2() { 
+  const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
+  const [nextId, setNextId] = useState(0);
+  const [playerPosition, setPlayerPosition] = useState({ row: 0, col: 0 });
+  const [startPlayerPosition, setStartPlayer] = useState({ row: 0, col: 0 });
+  const [endPosition, setEndPosition] = useState({ row: 3, col: 3 });
+  const [beer, setBeer] = useState<any[]>([]);
+  const [puddle, setPuddle] = useState<any[]>([]);
+  const [wall, setWall] = useState<any[]>([]);
+  collectedBeer = 0;
+  let startingPlayerPosition = {"row": 0, "col": 1 };
+  useEffect(() =>{
+    loadMapData();
+  },[]);
+  
     const addBlockToScript = (type) => {
         let indentLevel = 0;
         if (scriptBlocks.length > 0) {
@@ -97,28 +102,59 @@ export default function Game2() {
             newCol++;
         }
 
-        setPlayerPosition({ row: newRow, col: newCol });
-    };
+    const isWall = wall.some(item => item.row === newRow && item.col === newCol);
+    const isPuddle = puddle.some(item => item.row === newRow && item.col === newCol);
+    const isBeer = beer.some(item => item.row === newRow && item.col === newCol);
+    const isEnd = newRow === endPosition.row && newCol === endPosition.col;
 
-    const loadMapData = async () => {
-        try {
-            if (mapobject !== null) {
-                setPlayerPosition(mapobject.playerPosition);
-                setEndPosition(mapobject.endPosition);
-                setBeer(mapobject.beer);
-                setPuddle(mapobject.puddle);
-                setWall(mapobject.wall);
-            }
-        } catch (error) {
-            console.error('Błąd wczytywania danych z pliku map.json:', error);
-        }
-    };
+    if (isWall || isPuddle) {
+        // Gracz nie może się poruszać na pole z przeszkodą lub kałużą
+        return;
+    }
 
-    const renderSquares = () => {
+    if (isBeer) {
+      // Gracz zbiera piwo
+      collectedBeer++;
+      setBeer(prevBeer => prevBeer.filter(item => item.row !== newRow || item.col !== newCol)); // Usuwamy zebrane piwo
+    }
+
+    playerPosition.row = newRow;
+    playerPosition.col = newCol;
+    setPlayerPosition({ row: newRow, col: newCol });
+
+    if (isEnd) {
+      if (collectedBeer === maxBeer) {
+        console.log("Przeszedłeś");
+        Alert.alert('Gratulacje!', 'Przeszedłeś poziom!');
+      } else {
+        console.log("musisz zebrać piwa");
+        Alert.alert('Informacja', 'Musisz zebrać wszystkie piwa przed zakończeniem poziomu.');
+      }
+    }
+
+  };
+
+  const loadMapData = async () => {
+    try {
+      if (mapobject !== null) {
+        setPlayerPosition(mapobject.playerPosition);
+        setStartPlayer(mapobject.playerPosition);
+        setEndPosition(mapobject.endPosition);
+        setBeer(mapobject.beer);
+        setPuddle(mapobject.puddle);
+        setWall(mapobject.wall);
+        maxBeer=beer.length;
+      }
+    } catch (error) {
+      console.error('Błąd wczytywania danych z pliku map.json:', error);
+    }
+  };
+    const renderSquares = (usePlayerPosition = true) => {
         const squares = [];
+        const playerPos = usePlayerPosition ? playerPosition : startingPlayerPosition;
         for (let row = 0; row < GRID_ROWS; row++) {
             for (let col = 0; col < GRID_COLUMNS; col++) {
-                const isPlayerPosition = row === playerPosition.row && col === playerPosition.col;
+                const isPlayerPosition = row === playerPos.row && col === playerPos.col;
                 const isEndPosition = row === endPosition.row && col === endPosition.col;
                 const isBeerPosition = beer.some(item => item.row === row && item.col === col);
                 const isPuddlePosition = puddle.some(item => item.row === row && item.col === col);
@@ -147,9 +183,23 @@ export default function Game2() {
     };
 
     const runSimulation = async () => {
-        for (const block of  scriptBlocks) {
+        loadMapData();
+        collectedBeer = 0;
+        playerPosition.col = startingPlayerPosition.col;
+        playerPosition.row = startingPlayerPosition.row;
+        setPlayerPosition(startingPlayerPosition)
+        await new Promise (resolve => setTimeout(resolve, 1000));
+        playerPosition.col = startingPlayerPosition.col;
+        playerPosition.row = startingPlayerPosition.row;
+        setPlayerPosition(startingPlayerPosition)
+        renderSquares(false);
+        renderSquares(true);
+
+        for (const block of scriptBlocks) {
             if (block.count !== undefined) {
                 for(let i = 0; i < block.count; i++) {
+                    await new Promise (resolve => setTimeout(resolve, 500));
+
                     switch (block.type) {
                         case 'Góra':
                             movePlayer('Up');
@@ -166,8 +216,9 @@ export default function Game2() {
                         default:
                             break;
                     }
-                    renderSquares();
-                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    renderSquares(true);
+                    await new Promise (resolve => setTimeout(resolve, 500));
+
                 }
             } else {
                 console.log(block.type);
@@ -176,8 +227,8 @@ export default function Game2() {
     };
 
     return (
-        <View style={styles.container}>
-            <Button title="Uruchom symulację" onPress={runSimulation} />
+        <ScrollView automaticallyAdjustKeyboardInsets={true} style={styles.container}>
+            <Button title="Uruchom symulację" onPress={() => { loadMapData();renderSquares(); runSimulation(); }} />
             <View style={styles.simulationArea}>
                 <View style={styles.grid}>
                     {renderSquares()}
@@ -199,7 +250,7 @@ export default function Game2() {
                     </TouchableOpacity>
                 ))}
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
