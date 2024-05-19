@@ -37,7 +37,7 @@ export default function Game2() {
   const [wall, setWall] = useState<any[]>([]);
   const { moves } = useContext(Game2Context);
   collectedBeer = 0;
-  let startingPlayerPosition = { row: 0, col: 1 };
+  let startingPlayerPosition = { row: 6, col: 4 };
   useEffect(() => {
     loadMapData();
   }, []);
