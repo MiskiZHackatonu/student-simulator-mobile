@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Image,
 const mapobject = require("@/assets/ASDmap/map.json");
 
 const { width, height } = Dimensions.get('window');
-const GRID_COLUMNS = 10; // Liczba kolumn
+const GRID_COLUMNS = 8; // Liczba kolumn
 const SQUARE_SIZE = Math.floor(width/GRID_COLUMNS); // Rozmiar kwadratu
 const GRID_ROWS = 8; // Liczba wierszy
 
@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderTopWidth: 1,
         borderColor: '#ddd',
+        gap: 20,
     },
     scriptBlock: {
         padding: 10,
