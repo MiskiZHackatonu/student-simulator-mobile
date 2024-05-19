@@ -15,19 +15,88 @@ const s2_image = require('./../../assets/images/2.jpg')
 const background_wiet = require('./../../assets/images/background_wiet.jpg')
 
 const s1_itemParams = [
-  {rad: width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
-  {rad: width / 10, ang: 20, pos_rad: 120, label: "SYSOPY", backgroundColor: 'green'}
-]
+  {
+    rad: width / 5,
+    ang: 10,
+    pos_rad: 50,
+    label: "BAZY",
+    backgroundColor: "blue",
+  },
+  {
+    rad: width / 10,
+    ang: 10.05,
+    pos_rad: 170,
+    label: "SYSOPY",
+    backgroundColor: "green",
+  },
+];
 const s2_itemParams = [
-  {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
-  {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
-]
+  {
+    rad: width / 6,
+    ang: 50,
+    pos_rad: 100,
+    label: "UNIX",
+    backgroundColor: "yellow",
+  },
+  {
+    rad: width / 8,
+    ang: 110,
+    pos_rad: 100,
+    label: "IO",
+    backgroundColor: "red",
+  },
+];
+
+const useless_items = [
+  {
+    rad: width / 6,
+    ang: 4,
+    pos_rad: -100,
+    label: "NON_CLICKABLE",
+    backgroundColor: "purple",
+  },
+  {
+    rad: width / 6,
+    ang: 5.4,
+    pos_rad: 130,
+    label: "NON_CLICKABLE",
+    backgroundColor: "#A10000",
+  },
+  {
+    rad: width / 4,
+    ang: 4.5,
+    pos_rad: 210,
+    label: "NON_CLICKABLE",
+    backgroundColor: "#000080",
+  },
+  {
+    rad: width / 12,
+    ang: 5.10,
+    pos_rad: 220,
+    label: "NON_CLICKABLE",
+    backgroundColor: "darkviolet",
+  },
+  {
+    rad: width / 18,
+    ang: 5.33,
+    pos_rad: 300,
+    label: "NON_CLICKABLE",
+    backgroundColor: "#AA336A",
+  },
+  {
+    rad: width / 10,
+    ang: 2.5,
+    pos_rad: 125,
+    label: "NON_CLICKABLE",
+    backgroundColor: "cyan",
+  }
+];
 
 
 const data = [
-  {image: s1_image, params: s1_itemParams}, 
-  {image: s2_image, params: s2_itemParams}
-]
+  { image: s1_image, params: [...useless_items, ...s1_itemParams] },
+  { image: s2_image, params: s2_itemParams },
+];
 type ParamList = {
   params: {
     nick: string;
@@ -55,17 +124,15 @@ const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
   )
 }
 
-
 const App = () => {
   const [gameInfo, setGameInfo] = useState("None");
-  const route = useRoute<RouteProp<ParamList, 'params'>>();
+  const route = useRoute<RouteProp<ParamList, "params">>();
   const { nick } = route.params;
   const navigation = useNavigation();
   const [backgroundOffset, setBackgroundOffset] = useState(0);
 
   const {setNick} = useContext(AllGamesContext)
   setNick(nick);
-
 
   // const handleGameClick = (gameName: string) => {
   //   if (games.includes(gameName)) {
@@ -83,9 +150,7 @@ const App = () => {
   useEffect(() => {
     console.log(`got nick ${nick}`);
     navigation.setOptions({
-      headerTitle: () => (
-        <ThemedText>Welcome, {nick}!</ThemedText>
-      ),
+      headerTitle: () => <ThemedText>Welcome, {nick}!</ThemedText>,
       headerRight: () => (
         <Pressable onPress={logOut}>
           <ThemedText>Logout</ThemedText>
@@ -142,28 +207,28 @@ const App = () => {
 const styles = StyleSheet.create({
   item: {
     width,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
   title: {
     fontSize: 32,
   },
   backgroundImage: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover'
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   text: {
-    color: 'white',
+    color: "white",
     fontSize: 42,
     lineHeight: 84,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: '#000000c0',
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: "#000000c0",
   },
 });
 
