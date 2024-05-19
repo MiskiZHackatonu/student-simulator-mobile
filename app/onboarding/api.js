@@ -1,9 +1,10 @@
 import { Alert } from 'react-native';
 // hard code urls
 const registerLoginUrl = 'http://localhost:3000/api/registerOrLogin'; 
+const matchmakingUrl = 'http://localhost:3000/games/6/matchmaking';
 // const registerLoginUrl = 'http://172.20.10.2:3000/api/registerOrLogin'; 
 
-async function userFetch(url, name){
+async function fetchMessage(url, message){
   var responseBody = null;
   try {
     const response = await fetch(url, {
@@ -11,7 +12,7 @@ async function userFetch(url, name){
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "name": name})
+      body: JSON.stringify(message)
     });
     responseBody = await response.json();
   } catch (error) {
@@ -23,7 +24,9 @@ async function userFetch(url, name){
 
 // api.js
 export async function registerOrLogin(name) {
-  var responseBody = await userFetch(registerLoginUrl,name);
+  var responseBody = await fetchMessage(registerLoginUrl, {name: name});
+  // test matchmaking 
+  matchmaking(1, 1);
   if (responseBody.error) {
     Alert.alert('Connection Error', responseBody.message);
     console.log(responseBody);
@@ -32,30 +35,14 @@ export async function registerOrLogin(name) {
     console.log('User connected successfully');
   }
 }
-// export async function registerLoginUser(name, password) {
-//   try {
-//     var responseBody = await userFetch(registerUrl,name, password);
-//     if (responseBody.error) {
-//       Alert.alert('Registration Error', responseBody.message);
-//       console.log(responseBody);
-//     } else {
-//       Alert.alert('Success', 'User registered successfully');
-//       console.log('User registered successfully');
-//     }
-//   } catch {
-//     Alert.alert('Error', 'There was a problem with the request. Please try again later.');
-  
-//   }
-// }
 
-// export async function loginUser(name, password) {
-//   var responseBody = await userFetch(loginUrl,name, password);
-//   if (responseBody) {
-//     Alert.alert('Success', 'User logged in successfully');
-//     // log token
-//     console.log(responseBody);
-//   } else {
-//     Alert.alert('Login Error', 'Username or password is incorrect');
-//     console.log('Username or password is incorrect');
-//   }
-// }
+export async function matchmaking(lobbyId, userId) {
+  var responseBody = await fetchMessage(matchmakingUrl, {lobbyId: lobbyId, userId: userId});
+  if (responseBody.error) {
+    Alert.alert('Connection Error', responseBody.message);
+    console.log(responseBody);
+  } else {
+    Alert.alert('Success', 'Matchmaking successful');
+    console.log('Matchmaking successful');
+  }
+}
