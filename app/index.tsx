@@ -11,21 +11,23 @@ export default function BootScreen() {
     const load = async () => {
       await requestPermission();
 
+      router.replace("/games")
+
       if (permission?.granted) {
         // Redirect to the next screen
         // If nick is not set, we have to show onboarding screen
         const storedNick = await AsyncStorage.getItem("nick");
 
-        if (storedNick) {
-          router.replace({
-            pathname: "/games",
-            params: {
-              nick: storedNick,
-            },
-          });
-        } else {
-          router.replace("/onboarding");
-        }
+        // if (storedNick) {
+        //   router.replace({
+        //     pathname: "/games",
+        //     params: {
+        //       nick: storedNick,
+        //     },
+        //   });
+        // } else {
+        //   router.replace("/onboarding");
+        // }
       }
     };
     load();
