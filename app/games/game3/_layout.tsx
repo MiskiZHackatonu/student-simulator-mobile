@@ -22,6 +22,7 @@ const StackNavigator = () => {
           name="index"
           options={{
             headerShown: false,
+            presentation: 'modal'
           }}
         />
         <Stack.Screen
