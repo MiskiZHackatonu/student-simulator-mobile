@@ -31,7 +31,7 @@ export default function Index() {
           }}
           type="title"
         >
-          Semestr 1 - Unix
+          Semestr 6 - IO
         </ThemedText>
         <ThemedText
           style={{
