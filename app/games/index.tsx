@@ -63,7 +63,7 @@ const App = () => {
             backgroundColor: "white",
             borderRadius: 50,
             zIndex: 100,
-          }} onPress={() => router.push("/games/qrCamera")}/>
+    }} onPress={() => router.push("/games/qrCamera")}/>
     </SafeAreaView>
   );
 };
