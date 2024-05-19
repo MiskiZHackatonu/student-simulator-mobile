@@ -1,0 +1,19 @@
+{
+	"playerPosition": { "row": 0, "col": 1 },
+	"endPosition": { "row": 3, "col": 3 },
+	"beer": [
+		{ "row": 2, "col": 3 },
+		{ "row": 4, "col": 7 },
+		{ "row": 6, "col": 2 }
+	],
+	"puddle": [
+		{ "row": 1, "col": 1 },
+		{ "row": 3, "col": 5 },
+		{ "row": 5, "col": 9 }
+	],
+	"wall": [
+		{ "row": 0, "col": 2 },
+		{ "row": 2, "col": 6 },
+		{ "row": 4, "col": 10 }
+	]	
+}
