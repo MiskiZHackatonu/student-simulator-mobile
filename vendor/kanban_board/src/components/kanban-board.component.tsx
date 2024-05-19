@@ -263,7 +263,7 @@ class KanbanBoard extends React.Component<Props, State> {
       //move dragged item
       this.state.pan.setValue({
         x: this.dragX - this.state.startingX - draggedItemWidth / 2,
-        y: this.dragY - this.state.startingY - draggedItemHeight / 2
+        y: this.dragY - this.state.startingY - (draggedItemHeight / 2) - 300
       });
 
       const snapMargin = 50;
