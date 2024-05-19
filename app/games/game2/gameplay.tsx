@@ -39,7 +39,6 @@ export default function Gameplay() {
   const { moves } = useContext(Game2Context);
   const { setCompleted } = useContext(AllGamesContext);
 
-  collectedBeer = 0;
   let startingPlayerPosition = { row: 6, col: 4 };
   useEffect(() => {
     loadMapData();
