@@ -1,32 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Image, Button, Dimensions } from 'react-native';
 
-
 const mapobject = require("@/assets/ASDmap/map.json");
-const SQUARE_SIZE = 50; // Rozmiar kwadratu
-const GRID_COLUMNS = 12; // Liczba kolumn
+
+const { width, height } = Dimensions.get('window');
+const GRID_COLUMNS = 10; // Liczba kolumn
+const SQUARE_SIZE = Math.floor(width/GRID_COLUMNS); // Rozmiar kwadratu
 const GRID_ROWS = 8; // Liczba wierszy
 
-
 export default function Game2() {
-    const [scriptBlocks, setScriptBlocks] = useState([]);
-    const [nextId, setNextId] = useState(0);
+    const [scriptBlocks, setScriptBlocks] = useState<any[]>([]);
     const [playerPosition, setPlayerPosition] = useState({ row: 0, col: 0 });
     const [endPosition, setEndPosition] = useState({ row: 3, col: 3 });
-    const [beer, setBeer] = useState([]);
-    const [puddle, setPuddle] = useState([]);
-    const [wall, setWall] = useState([]);
-    const [screenWidth, setScreenWidth] = useState(0);
-    const [screenHeight, setScreenHeight] = useState(0);
-    const [currentBlockId, setCurrentBlockId] = useState(null);
+    const [beer, setBeer] = useState<any[]>([]);
+    const [puddle, setPuddle] = useState<any[]>([]);
+    const [wall, setWall] = useState<any[]>([]);
 
-
-    useEffect(() => {
+    useEffect(() =>{
         loadMapData();
-        const { width, height } = Dimensions.get('window');
-        setScreenWidth(width);
-        setScreenHeight(height);
-    }, []);
+    },[]);
 
     const addBlockToScript = (type) => {
         let indentLevel = 0;
@@ -70,7 +62,6 @@ export default function Game2() {
                 style={[
                     styles.scriptBlock,
                     { marginLeft: block.indentLevel * 20 },
-                    block.id === currentBlockId && styles.currentBlock // Dodane podświetlenie
                 ]}
             >
                 <TouchableOpacity onPress={() => removeBlockFromScript(block.id)}>
@@ -88,11 +79,11 @@ export default function Game2() {
         ));
     };
 
-    const removeBlockFromScript = (id) => {
+    const removeBlockFromScript = (id: number) => {
         setScriptBlocks(scriptBlocks.filter(block => block.id !== id));
     };
 
-    const movePlayer = (direction) => {
+    const movePlayer = (direction: string) => {
         let newRow = playerPosition.row;
         let newCol = playerPosition.col;
 
@@ -147,7 +138,6 @@ export default function Game2() {
                         {isPuddlePosition && <Image source={require('@/assets/images/puddle.png')} style={styles.bottomBlock} />}
                         {isWallPosition && <Image source={require('@/assets/images/wall.png')} style={styles.bottomBlock} />}
 
-
                         <Image source={require('@/assets/images/grass.png')} style={styles.image} />
                     </View>
                 );
@@ -157,11 +147,9 @@ export default function Game2() {
     };
 
     const runSimulation = async () => {
-        for (const block of scriptBlocks) {
-            setCurrentBlockId(block.id); // Ustawianie aktualnie wykonywanego bloczka
-
+        for (const block of  scriptBlocks) {
             if (block.count !== undefined) {
-                for (let i = 0; i < block.count; i++) {
+                for(let i = 0; i < block.count; i++) {
                     switch (block.type) {
                         case 'Góra':
                             movePlayer('Up');
@@ -175,23 +163,16 @@ export default function Game2() {
                         case 'Prawo':
                             movePlayer('Right');
                             break;
-                        case 'Powtórz':
-                            movePlayer('Right');
-                            for (let i = 0; i < block.count; i++){
-
-                            }
                         default:
                             break;
                     }
+                    renderSquares();
                     await new Promise(resolve => setTimeout(resolve, 1000));
                 }
             } else {
                 console.log(block.type);
             }
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Dodatkowa przerwa po każdym bloczku
         }
-
-        setCurrentBlockId(null); // Zresetuj aktualnie wykonywany bloczek po zakończeniu
     };
 
     return (
@@ -226,9 +207,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-
         backgroundColor: 'rgb(160, 172, 38)', // Dodaj kolor tła tutaj, aby rozciągnął się na cały ekran
-
     },
     simulationArea: {
         flex: 3,
@@ -238,49 +217,27 @@ const styles = StyleSheet.create({
         alignItems: 'center', // Wyśrodkowanie w poziomie
         justifyContent: 'center', // Wyśrodkowanie w pionie
     },
-    scriptScroll: {
+    scriptArea: {
         flex: 2,
         backgroundColor: '#f0f0f0',
-    },
-    scriptArea: {
         padding: 10,
-        flexDirection: 'column',
-        flexWrap: 'wrap', // Dodane do zawijania bloczków
-    },
-    scriptBlock: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 5,
-        margin: 5,
-        backgroundColor: '#fff',
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 5,
-    },
-    currentBlock: {
-        backgroundColor: '#ff0', // Dodane podświetlenie aktualnie wykonywanego bloczka
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 5,
-        marginLeft: 10,
-        width: 50,
     },
     blocksArea: {
         flex: 1,
+        flexWrap: "wrap",
         backgroundColor: '#eee',
         flexDirection: 'row',
-        flexWrap: 'wrap', // Dodane do zawijania przycisków
-        justifyContent: 'center',
-    },
-    block: {
+        justifyContent: 'space-around',
+        alignItems: 'center',
         padding: 10,
-        margin: 5,
-        backgroundColor: '#ddd',
-        borderColor: '#bbb',
-        borderWidth: 1,
-
+        borderTopWidth: 1,
+        borderColor: '#ddd',
+    },
+    scriptBlock: {
+        padding: 10,
+        marginVertical: 5,
+        flexDirection: "row",
+        backgroundColor: '#add8e6',
         borderRadius: 5,
     },
     grid: {
@@ -292,30 +249,46 @@ const styles = StyleSheet.create({
     square: {
         width: SQUARE_SIZE,
         height: SQUARE_SIZE,
-
-        borderWidth: 1,
-        borderColor: '#999',
+        alignItems: 'center',
+        justifyContent: 'center',
         position: 'relative',
     },
-    player: {
-        position: 'absolute',
+    image: {
         width: '100%',
         height: '100%',
         resizeMode: 'contain',
-    },
-    image: {
         position: 'absolute',
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
+        zIndex: 1,
     },
-    bottomBlock: {
-        position: 'absolute',
+    player: {
         width: '80%',
         height: '80%',
         resizeMode: 'contain',
+        position: 'absolute',
+        zIndex: 3,
+    },
+    bottomBlock: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
+        position: 'absolute',
+        zIndex: 2,
+    },
+    block: {
+        padding: 10,
+        backgroundColor: '#ccc',
+        flexDirection: "row",
+        borderRadius: 5,
+    },
+    input: {
+        height: 20,
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: 20,
+        textAlign: 'center',
+        marginLeft: 5,
+    },
+    scriptScroll: {
+        flex: 2,
     },
 });
-
-export default Game2;
-
