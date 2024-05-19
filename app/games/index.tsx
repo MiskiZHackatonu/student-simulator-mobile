@@ -1,51 +1,65 @@
-import { ThemedText } from "@/components/ThemedText";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, StyleSheet, FlatList, Dimensions, ImageBackground, Text, View} from "react-native";
 import InfoBottomsheet from "@/components/InfoBottomsheet";
 import CircularMenu from "@/components/CircularMenu";
 import QRButton from "@/components/QRButton";
+import { AllGamesContext } from "./_layout";
+
 
 const { width, height } = Dimensions.get('window');
+const s1_image = require('./../../assets/images/wydzial.jpg')
+const s2_image = require('./../../assets/images/wydzial.jpg')
 
-const imageXD = {uri: 'https://legacy.reactjs.org/logo-og.png'};
+const s1_itemParams = [
+  {rad: width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
+  {rad: width / 10, ang: 20, pos_rad: 120, label: "SYSOPY", backgroundColor: 'green'}
+]
+const s2_itemParams = [
+  {rad: width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
+  {rad: width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
+]
 
-const DATA = [
-  { id: '1', title: 'Page 1' },
-  { id: '2', title: 'Page 2' },
-  { id: '3', title: 'Page 3' },
-  { id: '4', title: 'Page 4' },
-];
+const data = [
+  {image: s1_image, params: s1_itemParams}, 
+  {image: s2_image, params: s2_itemParams}
+]
 
-const GamesList = () => {
+const Screen = ({gameInfo, setGameInfo, itemParams, image}) => {
+
+  const {completed, setCompleted} = useContext(AllGamesContext)
+
+  return (
+    <SafeAreaView style={styles.item}>
+    <ImageBackground
+    source={image}
+    style={styles.backgroundImage}
+    resizeMode="cover"
+      >
+    <CircularMenu setGameInfo={setGameInfo} itemParams={itemParams} completed={completed}/>
+    <InfoBottomsheet
+      key={gameInfo}
+      currentGameInfo={gameInfo}
+      setCurrentGameInfo={setGameInfo}
+    />
+    </ImageBackground>
+  </SafeAreaView>
+  )
+}
+
+
+const App = () => {
   const [gameInfo, setGameInfo] = useState("None");
 
   return (
     <SafeAreaView style={styles.item}>
-      <ImageBackground
-      source={{uri: 'https://legacy.reactjs.org/logo-og.png'}}
-      style={styles.backgroundImage}
-      resizeMode="cover"
-        >
-      <CircularMenu setGameInfo={setGameInfo} />
-      <InfoBottomsheet
-        key={gameInfo}
-        currentGameInfo={gameInfo}
-        setCurrentGameInfo={setGameInfo}
-      />
-      </ImageBackground>
-    </SafeAreaView>
-    
-  );
-};
-
-const App = () => {
-  return (
-    <SafeAreaView style={styles.item}>
     <FlatList
-      data={DATA}
-      renderItem={({ item }) => <GamesList/>}
-      keyExtractor={item => item.id}
+      data={data}
+      renderItem={({ item }) => <Screen 
+        gameInfo = {gameInfo} 
+        setGameInfo={setGameInfo} 
+        itemParams={item.params} 
+        image={item.image}/>}
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={true}
