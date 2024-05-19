@@ -122,9 +122,6 @@ export default function ScrolableHorizontal() {
     for (let i = 0; i < cards.length; i++) {
       const operation = cards[i].description?.charAt(0);
       const value = parseInt(cards[i].description?.substring(1) ?? "0");
-      // console.log(operation);
-      // console.log(value);
-      // console.log(cards[i].columnId);
       switch (cards[i].columnId) {
         case "card_deck":
           column = 4;

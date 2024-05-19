@@ -1,7 +1,9 @@
 import { Alert } from "react-native";
 // hard code urls
 const ifLocalhost = false;
+
 const ip = ifLocalhost ? "localhost" : "172.20.10.5";
+
 const registerLoginUrl = `http://${ip}:3000/api/registerOrLogin`;
 const matchmakingUrl = `http://${ip}:3000/games/6/matchmaking`;
 const setScoreUrl = `http://${ip}:3000/games/setScore`;
