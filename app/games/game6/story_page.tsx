@@ -16,8 +16,8 @@ export default function StoryPage() {
         Twoim zadaniem jest poruszanoe sie po terminalu komendami Unixowymi i odnalezienie pytań na egzamin poprawkowy.
         Twoi znajomi z roku liczą na Ciebie, nie zawiedź ich!
       </Text>
-      <Button title= "PRZEJDŹ DALEJ" onPress={() => router.push("/games/game1/tutorial")}/> 
-      <Text>Tutorial</Text>
+      <Button title= "PRZEJDŹ DALEJ" onPress={() => router.push("/games/game6/matchmaking_lobby")}/> 
+      <Text>Znajdź współgracza</Text>
     </View>
   );
 }
