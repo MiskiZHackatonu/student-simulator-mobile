@@ -20,7 +20,7 @@ export default function Game2() {
   const [puddle, setPuddle] = useState<any[]>([]);
   const [wall, setWall] = useState<any[]>([]);
   collectedBeer = 0;
-  let startingPlayerPosition = playerPosition;
+  let startingPlayerPosition = {"row": 0, "col": 1 };
   useEffect(() =>{
     loadMapData();
   },[]);
@@ -151,10 +151,10 @@ export default function Game2() {
   };
     const renderSquares = (usePlayerPosition = true) => {
         const squares = [];
-        const playerPos = usePlayerPosition ? playerPosition : {row: 10, col:10};
+        const playerPos = usePlayerPosition ? playerPosition : startingPlayerPosition;
         for (let row = 0; row < GRID_ROWS; row++) {
             for (let col = 0; col < GRID_COLUMNS; col++) {
-                const isPlayerPosition = row === playerPosition.row && col === playerPosition.col;
+                const isPlayerPosition = row === playerPos.row && col === playerPos.col;
                 const isEndPosition = row === endPosition.row && col === endPosition.col;
                 const isBeerPosition = beer.some(item => item.row === row && item.col === col);
                 const isPuddlePosition = puddle.some(item => item.row === row && item.col === col);
@@ -185,14 +185,15 @@ export default function Game2() {
     const runSimulation = async () => {
         loadMapData();
         collectedBeer = 0;
-        playerPosition.col = startPlayerPosition.col;
-        playerPosition.row = startPlayerPosition.row;
-        setPlayerPosition(startPlayerPosition)
+        playerPosition.col = startingPlayerPosition.col;
+        playerPosition.row = startingPlayerPosition.row;
+        setPlayerPosition(startingPlayerPosition)
         await new Promise (resolve => setTimeout(resolve, 1000));
-        playerPosition.col = startPlayerPosition.col;
-        playerPosition.row = startPlayerPosition.row;
-        setPlayerPosition(startPlayerPosition)
+        playerPosition.col = startingPlayerPosition.col;
+        playerPosition.row = startingPlayerPosition.row;
+        setPlayerPosition(startingPlayerPosition)
         renderSquares(false);
+        renderSquares(true);
 
         for (const block of scriptBlocks) {
             if (block.count !== undefined) {
@@ -226,8 +227,8 @@ export default function Game2() {
     };
 
     return (
-        <View style={styles.container}>
-            <Button title="Uruchom symulację" onPress={() => { loadMapData(); runSimulation(); }} />
+        <ScrollView automaticallyAdjustKeyboardInsets={true} style={styles.container}>
+            <Button title="Uruchom symulację" onPress={() => { loadMapData();renderSquares(); runSimulation(); }} />
             <View style={styles.simulationArea}>
                 <View style={styles.grid}>
                     {renderSquares()}
@@ -249,7 +250,7 @@ export default function Game2() {
                     </TouchableOpacity>
                 ))}
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
