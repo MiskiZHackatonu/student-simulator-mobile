@@ -4,6 +4,7 @@ const StackNavigator = () => (
   <Stack
     screenOptions={{
       headerShown: false,
+      animation: 'none'
     }}
   />
 );

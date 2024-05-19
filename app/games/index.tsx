@@ -52,7 +52,18 @@ const App = () => {
       snapToAlignment="center"
       decelerationRate="fast"
     />
-    <QRButton onPress={() => router.push("games/game3/qrCamera")}/>
+    <QRButton style={{
+            position: "absolute",
+            bottom: 40,
+            left: 20,
+            width: 50,
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "white",
+            borderRadius: 50,
+            zIndex: 100,
+          }} onPress={() => router.push("/games/qrCamera")}/>
     </SafeAreaView>
   );
 };

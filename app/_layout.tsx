@@ -26,13 +26,18 @@ export default function RootLayout() {
     const load = async () => {
       if (loaded) {
         // If nick is not set, we have to show onboarding screen
-        const nick = await AsyncStorage.getItem("nick");
+        const storedNick = await AsyncStorage.getItem("nick");
 
-        if (true) {
-          router.replace("/games");
-        } else {
-          router.replace("/onboarding");
-        }
+        // if (storedNick) {
+        //   router.replace({
+        //     pathname: "/games",
+        //     params: {
+        //       nick: storedNick,
+        //     },
+        //   });
+        // } else {
+        //   router.replace("/games");
+        // }
 
         SplashScreen.hideAsync();
       }
