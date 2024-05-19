@@ -151,7 +151,7 @@ export default function Game2() {
         return squares;
     };
 
-    const runMove = (blocks)  =>{
+    const runMove = async (blocks)  =>{
         for (const block of blocks) {
             if (block.count !== undefined) {
                 for (let i = 0; i < block.count; i++) {
