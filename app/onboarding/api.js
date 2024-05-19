@@ -1,10 +1,12 @@
 import { Alert } from 'react-native';
 // hard code urls
-const registerLoginUrl = 'http://localhost:3000/api/registerOrLogin'; 
-const matchmakingUrl = 'http://localhost:3000/games/6/matchmaking';
-const setScoreUrl = 'http://localhost:3000/games/setScore';
-const games6SolvedUrl = 'http://localhost:3000/games/6/solved';
-const gamesRankingUrl = 'http://localhost:3000/games/ranking';
+const ifLocalhost = false;
+const ip = ifLocalhost ? 'localhost' : "172.20.10.2";
+const registerLoginUrl = `http://${ip}:3000/api/registerOrLogin`;
+const matchmakingUrl = `http://${ip}:3000/games/6/matchmaking`;
+const setScoreUrl = `http://${ip}:3000/games/setScore`;
+const games6SolvedUrl = `http://${ip}:3000/games/6/solved`;
+const gamesRankingUrl = `http://${ip}:3000/games/ranking`;
 // const registerLoginUrl = 'http://172.20.10.2:3000/api/registerOrLogin'; 
 
 async function messagePOST(url, message){
