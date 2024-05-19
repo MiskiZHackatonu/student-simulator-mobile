@@ -35,48 +35,45 @@ const gameInfo = {
     BAZY: { 
         title: "Semestr 3 - bazy danych",
         desc: 
-        "Znajdujesz się na semestrze trzecim, gdzie do zdania masz przedmiot \
-        Bazy danych! W tym roku aby zaliczyć przedmiot należy napisać \
-        kolokwium zaliczeniowe. Dostaniesz trzy pytania z zakresu SQL - dla \
-        każdego z nich musiz poprawnie ułożyć zapytanie SQL. Niestety twoj \
-        wiedza jest zerowa - nic dziwnego, przecież nic się nie uczyłeś cały \
-        semestr a dopiero 2h przed terminem ogarnąłeś że masz kolosa. \
-        Dodatkowo to kolokwium musisz niestety napisać na 100%. Na szczęście \
-        prowadzący czasami wychodzi z sali, a więc masz szansę na pomoc od \
-        kolegów - podejdź do nich skanując kod QR i skorzystaj z ich wiedzy!" 
+        "    Znajdujesz się na semestrze trzecim, gdzie do zdania masz przedmiot\
+Bazy danych! W tym roku aby zaliczyć przedmiot należy napisać \
+kolokwium zaliczeniowe. Dostaniesz trzy pytania z zakresu SQL - dla \
+każdego z nich musiz poprawnie ułożyć zapytanie SQL. Niestety twoj \
+wiedza jest zerowa - nic dziwnego, przecież nic się nie uczyłeś cały \
+semestr a dopiero 2h przed terminem ogarnąłeś że masz kolosa. \
+Dodatkowo to kolokwium musisz niestety napisać na 100%. Na szczęście \
+prowadzący czasami wychodzi z sali, a więc masz szansę na pomoc od \
+kolegów - podejdź do nich skanując kod QR i skorzystaj z ich wiedzy!" 
     },
     IO: { 
-        title: "IO", 
-        desc: 
-        "Inżyniekra pisze sie pełną parą, a twój promotor nagle wymyślił sobie zmiane platformy do zarządzania projektem. \
-        Software ten zapewnia Zwiększenie współpracy i synergii w celu optymalizacji procesów oraz osiągnięcia wspólnych celów strategicznych \
-        poprzez ukrywanie części informacji między użytkownikami zmuszając ich do większej kominukacji. \
-        Toim celem jest przeniesienie ze projektu na nowego kandama z pomocą drugiego gracza."
-    },
+        title: "Semestr 6 - IO", 
+        desc: "Inżynierka pisze sie pełną parą, a twój promotor nagle wymyślił sobie zmiane platformy do zarządzania projektem. \
+Software ten zapewnia Zwiększenie współpracy i synergii w celu optymalizacji procesów oraz osiągnięcia wspólnych celów strategicznych \
+poprzez ukrywanie części informacji między użytkownikami zmuszając ich do większej kominukacji. \
+Toim celem jest przeniesienie ze projektu na nowego kandama z pomocą drugiego gracza."},
     UNIX: { 
-        title: "UNIX",
-        desc:
-        "Znajdujesz się na semestrze drugim, gdzie do zdania masz przedmiot \
-        Algorytmy i Struktury Danych! W tym roku aby zaliczyć przedmiot \
-        należy napisać prosty algorytm. Po wejściu zobaczysz mapę AGH oraz studenta, \
-        który wraca z piątkowych zajęć. Twoim zadaniem jest napisać algorytm, \
-        dzięki czemu student dojdzie do akademika. Pamiętaj, że zbliża się weekend, \
-        dlatego aby algorytm był poprawny, student musi po drodzę zebrać wszystkie \
-        butelki piwa! Niestety twoja wiedza algorytmiczna jest zerowa - nic dziwnego, \
-        przecież nie ma co się uczyć w trakcie semestru. Na szczęście możesz znaleźć \
-        porozrzucane kody QR po sali, dzięki czemu skanując je, poznasz \
-        bloczkowe procedury, dzięki czemu będziesz w stanie napisać algorytm! "
+        title: "Semestr 1 - UNIX-Y",
+        desc: "Zbliża sie termin poprawkowy egzaminu z Unixów, a Ty nie masz pojęcia \
+o co chodzi. Twoi koledzy tak samo jak Ty nie przykładali się do \
+nauki. Już nie masz szans nauczyć się wszystkiego na pamięć, zostało \
+Ci tylko jedno wyjście - włamanie do systemu uczelni i zmiana zdobycie \
+pytań na egzamin. Twoim zadaniem jest poruszanoe sie po terminalu \
+komendami Unixowymi i odnalezienie pytań na egzamin poprawkowy. Twoi \
+znajomi z roku liczą na Ciebie, nie zawiedź ich!" 
+
     },
-    SYSOPY: { 
-        title: "SYSOPY", 
-        desc: 
-        "Zbliża sie termin poprawkowy egzaminu z Unixów, a Ty nie masz pojęcia \
-        o co chodzi. Twoi koledzy tak samo jak Ty nie przykładali się do \
-        nauki. Już nie masz szans nauczyć się wszystkiego na pamięć, zostało \
-        Ci tylko jedno wyjście - włamanie do systemu uczelni i zmiana zdobycie \
-        pytań na egzamin. Twoim zadaniem jest poruszanoe sie po terminalu \
-        komendami Unixowymi i odnalezienie pytań na egzamin poprawkowy. Twoi \
-        znajomi z roku liczą na Ciebie, nie zawiedź ich!" 
+    ASD: { 
+        title: "Semestr 2 - ASD", 
+        desc: "Znajdujesz się na semestrze drugim, gdzie do zdania masz przedmiot \
+Algorytmy i Struktury Danych! W tym roku aby zaliczyć przedmiot \
+należy napisać prosty algorytm. Po wejściu zobaczysz mapę AGH oraz studenta, \
+który wraca z piątkowych zajęć. Twoim zadaniem jest napisać algorytm, \
+dzięki czemu student dojdzie do akademika. Pamiętaj, że zbliża się weekend, \
+dlatego aby algorytm był poprawny, student musi po drodzę zebrać wszystkie \
+butelki piwa! Niestety twoja wiedza algorytmiczna jest zerowa - nic dziwnego, \
+przecież nie ma co się uczyć w trakcie semestru. Na szczęście możesz znaleźć \
+porozrzucane kody QR po sali, dzięki czemu skanując je, poznasz \
+bloczkowe procedury, dzięki czemu będziesz w stanie napisać algorytm!"
     },
   };
 
@@ -140,7 +137,7 @@ const styles = StyleSheet.create({
   bottomsheet_container: {
     width: "100%",
     height: SCREEN_HEIGHT,
-    backgroundColor: "#00f8",
+    backgroundColor: "#d9d9d9",
     position: "absolute",
     top: SCREEN_HEIGHT / 1.5,
     zIndex: 12000,
@@ -176,7 +173,8 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    textAlign: "center",
-    color: "#666",
+    textAlign: "justify",
+    color: "#84acce",
+    margin: 20,
   },
 });
