@@ -48,7 +48,6 @@ export default function Index() {
         <Pressable onPress={() => router.push("/games/game6/matchmaking_lobby")}>
           <ThemedText
             style={{
-              marginTop: "40%",
               fontSize: 22,
             }}
             type="link"
