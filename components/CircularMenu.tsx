@@ -1,20 +1,15 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-const CircularMenu = ({setGameInfo}) => {
+const CircularMenu = ({setGameInfo, itemParams, completed}) => {
     const [containerLayout, setContainerLayout] = useState({x: 0, y: 0, width: 200, height: 200});
     const onLayout= (event) => {
         setContainerLayout(event.nativeEvent.layout)
         console.log(`${containerLayout.x} ${containerLayout.y} ${containerLayout.width} ${containerLayout.height} pressed`)
     }
 
-    const itemParams = [
-        {rad: containerLayout.width / 6, ang: 50, pos_rad: 100, label: "UNIX", backgroundColor: 'yellow'}, 
-        {rad: containerLayout.width / 8, ang: 110, pos_rad: 100, label: "IO", backgroundColor: 'red'},
-        {rad: containerLayout.width / 5, ang: 149, pos_rad: 120, label: "BAZY", backgroundColor: 'blue'},
-        {rad: containerLayout.width / 10, ang: 20, pos_rad: 120, label: "SYSOPY", backgroundColor: 'green'},
+    
 
-    ]
     const center = {x: containerLayout.width / 2, y: containerLayout.height / 2}
     const itemProps = itemParams.map((params, index) => ({
         width: params.rad * 2, 
@@ -22,8 +17,8 @@ const CircularMenu = ({setGameInfo}) => {
         top: params.pos_rad * Math.sin(params.ang) + center.y - params.rad,
         left: params.pos_rad * Math.cos(params.ang) + center.x - params.rad,
         borderRadius: params.rad,
-        backgroundColor: params.backgroundColor
-    }));
+        backgroundColor: completed.includes(params.label) ?  "grey" : params.backgroundColor
+     }));
 
     const menuItems = itemProps.map((props, index) => (
         <TouchableOpacity
