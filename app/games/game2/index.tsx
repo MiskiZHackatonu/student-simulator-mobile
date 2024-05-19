@@ -16,6 +16,7 @@ import { Game2Context } from "./_layout";
 import QRButton from "@/components/QRButton";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
+import { AllGamesContext } from "../_layout";
 
 const mapobject = require("@/assets/ASDmap/map.json");
 
@@ -36,6 +37,8 @@ export default function Game2() {
   const [puddle, setPuddle] = useState<any[]>([]);
   const [wall, setWall] = useState<any[]>([]);
   const { moves } = useContext(Game2Context);
+  const { setCompleted } = useContext(AllGamesContext);
+
   collectedBeer = 0;
   let startingPlayerPosition = { row: 6, col: 4 };
   useEffect(() => {
@@ -152,7 +155,18 @@ export default function Game2() {
     if (isEnd) {
       if (collectedBeer === maxBeer) {
         console.log("Przeszedłeś");
-        Alert.alert("Gratulacje!", "Przeszedłeś poziom!");
+        Alert.alert("Gratulacje!", "Przeszedłeś poziom!", [
+          {
+            text: "OK",
+            onPress: () => {
+              setCompleted((completed) => [...completed, "ASD"]);
+              router.replace("/games");
+              while (router.canGoBack()) {
+                router.back();
+              }
+            },
+          },
+        ]);
       } else {
         console.log("musisz zebrać piwa");
         Alert.alert(

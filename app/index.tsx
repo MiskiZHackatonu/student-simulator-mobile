@@ -11,7 +11,7 @@ export default function BootScreen() {
     const load = async () => {
       await requestPermission();
 
-      router.replace("/games");
+      // router.replace("/games");
 
       if (permission?.granted) {
         // Redirect to the next screen

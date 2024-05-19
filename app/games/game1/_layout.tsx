@@ -11,8 +11,8 @@ const StackNavigator = () => (
     <Stack.Screen
       name="tutorial"
       options={{
+        headerBackTitle: "Wróć",
         title: "Opis zadania",
-        headerShown: false,
       }}
     />
   </Stack>
