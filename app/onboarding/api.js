@@ -4,9 +4,10 @@ const registerLoginUrl = 'http://localhost:3000/api/registerOrLogin';
 const matchmakingUrl = 'http://localhost:3000/games/6/matchmaking';
 const setScoreUrl = 'http://localhost:3000/games/setScore';
 const games6SolvedUrl = 'http://localhost:3000/games/6/solved';
+const gamesRankingUrl = 'http://localhost:3000/games/ranking';
 // const registerLoginUrl = 'http://172.20.10.2:3000/api/registerOrLogin'; 
 
-async function fetchMessage(url, message){
+async function messagePOST(url, message){
   var responseBody = null;
   try {
     const response = await fetch(url, {
@@ -24,9 +25,28 @@ async function fetchMessage(url, message){
   return responseBody;
 }
 
+async function messageGET(url){
+  var responseBody = null;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    responseBody = await response.json();
+  } catch (error) {
+    Alert.alert('Error', 'There was a problem with the request. Please try again later.');
+    // log error message from server to console
+  }
+  return responseBody;
+
+}
+
+
 // api.js
 export async function registerOrLogin(name) {
-  var responseBody = await fetchMessage(registerLoginUrl, {name: name});
+  var responseBody = await messagePOST(registerLoginUrl, {name: name});
   // test matchmaking 
   if (responseBody.error) {
     Alert.alert('Connection Error', responseBody.message);
@@ -38,7 +58,7 @@ export async function registerOrLogin(name) {
 }
 
 export async function matchmaking(lobbyId, userId) {
-  var responseBody = await fetchMessage(matchmakingUrl, {lobbyId: lobbyId, userId: userId});
+  var responseBody = await messagePOST(matchmakingUrl, {lobbyId: lobbyId, userId: userId});
   if (responseBody.error) {
     Alert.alert('Connection Error', responseBody.message);
     console.log(responseBody);
@@ -49,8 +69,8 @@ export async function matchmaking(lobbyId, userId) {
   return responseBody.id;
 }
 
-export async function setScore (userId, gameId) {
-  var responseBody = await fetchMessage(setScoreUrl, {userId: userId, gameId: gameId});
+export async function setScore (lobbyId, userId) {
+  var responseBody = await messagePOST(setScoreUrl, { lobbyId: lobbyId, userId: userId });
   if (responseBody.error) {
     Alert.alert('Connection Error', responseBody.message);
     console.log(responseBody);
@@ -60,13 +80,26 @@ export async function setScore (userId, gameId) {
   }
 }
 
-export async function games6Solved (userId, gameId) {
-  var responseBody = await fetchMessage(games6SolvedUrl, {userId: userId, gameId: gameId});
+export async function games6Solved (lobbyId, userId) {
+  console.log('lobbyId', lobbyId);
+  console.log('userId', userId);
+  var responseBody = await messagePOST(games6SolvedUrl, { lobbyId: lobbyId, userId: userId });
   if (responseBody.error) {
     Alert.alert('Connection Error', responseBody.message);
     console.log(responseBody);
   } else {
     Alert.alert('Success', 'Solved updated successfully');
     console.log('Solved updated successfully');
+  }
+}
+
+export async function getRanking () {
+  var responseBody = await messageGET(gamesRankingUrl);
+  if (responseBody.error) {
+    Alert.alert('Connection Error', responseBody.message);
+    console.log(responseBody);
+  } else {
+    console.log(responseBody);
+    return responseBody;
   }
 }

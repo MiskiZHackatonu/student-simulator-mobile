@@ -32,7 +32,7 @@ const GamesList = () => {
   const logOut = useCallback(async () => {
     await AsyncStorage.removeItem("nick");
     router.replace({
-      pathname: "/onboarding",
+      pathname: "/games/game6",
     });
   }, []);
 
