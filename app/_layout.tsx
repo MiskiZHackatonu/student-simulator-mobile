@@ -11,6 +11,7 @@ import "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -45,6 +46,7 @@ export default function RootLayout() {
   }
 
   return (
+    <GestureHandlerRootView>
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack
         screenOptions={{
@@ -53,5 +55,6 @@ export default function RootLayout() {
         }}
       />
     </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

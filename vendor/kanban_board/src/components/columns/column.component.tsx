@@ -209,7 +209,7 @@ export class Column extends React.Component<Props, State> {
 
         {columnContent}
         <View style={{ height: 8 }}>
-        {column.baseValue===0  ?  <Text></Text>: (calcResult === column.expectedValue ? <Badge value={column.expectedValue} backgroundColor = "#00ff00" />:<Badge value={column.expectedValue}/>)}
+        {column.baseValue===0  ?  <Text></Text>: (calcResult === column.expectedValue ? <Badge value={column.expectedValue} backgroundColor = "#00ff00" />:<Badge value={column.expectedValue} backgroundColor='#333333'/>)}
         </View>
       </View>
     );
@@ -220,18 +220,20 @@ export default Column;
 
 const styles = StyleSheet.create({
   columnContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#84ACCE',
     borderRadius: 8,
     padding: 8
   },
   columnHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 24
+    marginBottom: 24,
+    backgroundColor:'#84ACCE'
   },
   columnHeaderTitle: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#333333'
   },
   columnHeaderRightContainer: {
   },

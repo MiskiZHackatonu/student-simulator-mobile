@@ -43,7 +43,9 @@ export default function ScrolableHorizontal(){
       }
     const params = useLocalSearchParams();
     const player_id:number = params.player_id;
-    const other_player_id = (player_id === 1 ? 2 : 1);
+    const other_player_id = player_id == 1 ? 2 : 1;
+    console.log(player_id);
+    console.log(other_player_id);
     const card_models_h = []
     for (let i = 0; i < 7; i++) {
         card_models_h.push(new CardModel(
