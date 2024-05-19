@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Image, Button, Dimensions } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
 const mapobject = require("@/assets/ASDmap/map.json");
-const GRID_COLUMNS = 10; // Liczba kolumn
-const SQUARE_SIZE = Math.floor(width/GRID_COLUMNS); // Rozmiar kwadratu
-const GRID_ROWS = 10 // Liczba wierszy
+const SQUARE_SIZE = 50; // Rozmiar kwadratu
+const GRID_COLUMNS = 12; // Liczba kolumn
+const GRID_ROWS = 8; // Liczba wierszy
 
 export default function Game2() {
     const [scriptBlocks, setScriptBlocks] = useState([]);
@@ -17,6 +16,7 @@ export default function Game2() {
     const [wall, setWall] = useState([]);
     const [screenWidth, setScreenWidth] = useState(0);
     const [screenHeight, setScreenHeight] = useState(0);
+    const [currentBlockId, setCurrentBlockId] = useState(null);
 
     useEffect(() => {
         loadMapData();
@@ -67,6 +67,7 @@ export default function Game2() {
                 style={[
                     styles.scriptBlock,
                     { marginLeft: block.indentLevel * 20 },
+                    block.id === currentBlockId && styles.currentBlock // Dodane podświetlenie
                 ]}
             >
                 <TouchableOpacity onPress={() => removeBlockFromScript(block.id)}>
@@ -151,41 +152,9 @@ export default function Game2() {
         return squares;
     };
 
-    const runMove = (blocks)  =>{
-        for (const block of blocks) {
-            if (block.count !== undefined) {
-                for (let i = 0; i < block.count; i++) {
-                    switch (block.type) {
-                        case 'Góra':
-                            movePlayer('Up');
-                            break;
-                        case 'Dół':
-                            movePlayer('Down');
-                            break;
-                        case 'Lewo':
-                            movePlayer('Left');
-                            break;
-                        case 'Prawo':
-                            movePlayer('Right');
-                            break;
-                        case 'Powtórz':
-                            movePlayer('Right');
-                            for (let i = 0; i < block.count; i++){
-
-                            }
-                        default:
-                            break;
-                    }
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                }
-            } else {
-                console.log(block.type);
-            }
-        }
-    }
-
     const runSimulation = async () => {
         for (const block of scriptBlocks) {
+            setCurrentBlockId(block.id); // Ustawianie aktualnie wykonywanego bloczka
             if (block.count !== undefined) {
                 for (let i = 0; i < block.count; i++) {
                     switch (block.type) {
@@ -201,11 +170,6 @@ export default function Game2() {
                         case 'Prawo':
                             movePlayer('Right');
                             break;
-                        case 'Powtórz':
-                            movePlayer('Right');
-                            for (let i = 0; i < block.count; i++){
-
-                            }
                         default:
                             break;
                     }
@@ -214,8 +178,10 @@ export default function Game2() {
             } else {
                 console.log(block.type);
             }
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Dodatkowa przerwa po każdym bloczku
         }
-    }
+        setCurrentBlockId(null); // Zresetuj aktualnie wykonywany bloczek po zakończeniu
+    };
 
     return (
         <View style={styles.container}>
@@ -249,7 +215,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#ddd', // Dodaj kolor tła tutaj, aby rozciągnął się na cały ekran
+        backgroundColor: 'rgb(160, 172, 38)', // Dodaj kolor tła tutaj, aby rozciągnął się na cały ekran
     },
     simulationArea: {
         flex: 3,
@@ -259,28 +225,48 @@ const styles = StyleSheet.create({
         alignItems: 'center', // Wyśrodkowanie w poziomie
         justifyContent: 'center', // Wyśrodkowanie w pionie
     },
-    scriptArea: {
+    scriptScroll: {
         flex: 2,
-        backgroundColor: '#ddd',
+        backgroundColor: '#f0f0f0',
+    },
+    scriptArea: {
         padding: 10,
+        flexDirection: 'column',
+        flexWrap: 'wrap', // Dodane do zawijania bloczków
+    },
+    scriptBlock: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5,
+        margin: 5,
+        backgroundColor: '#fff',
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
+    },
+    currentBlock: {
+        backgroundColor: '#ff0', // Dodane podświetlenie aktualnie wykonywanego bloczka
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 5,
+        marginLeft: 10,
+        width: 50,
     },
     blocksArea: {
         flex: 1,
-        flexWrap: "wrap",
         backgroundColor: '#eee',
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        padding: 10,
-        borderTopWidth: 1,
-        borderColor: '#ddd',
+        flexWrap: 'wrap', // Dodane do zawijania przycisków
+        justifyContent: 'center',
     },
-    scriptBlock: {
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        padding: 5,
-        marginVertical: 5,
-        backgroundColor: '#add8e6',
+    block: {
+        padding: 10,
+        margin: 5,
+        backgroundColor: '#ddd',
+        borderColor: '#bbb',
+        borderWidth: 1,
         borderRadius: 5,
     },
     grid: {
@@ -292,45 +278,28 @@ const styles = StyleSheet.create({
     square: {
         width: SQUARE_SIZE,
         height: SQUARE_SIZE,
-        alignItems: 'center',
-        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#999',
         position: 'relative',
     },
-    image: {
+    player: {
+        position: 'absolute',
         width: '100%',
         height: '100%',
         resizeMode: 'contain',
-        position: 'absolute',
-        zIndex: 1,
     },
-    player: {
+    image: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
+    bottomBlock: {
+        position: 'absolute',
         width: '80%',
         height: '80%',
         resizeMode: 'contain',
-        position: 'absolute',
-        zIndex: 3,
-    },
-    bottomBlock: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'contain',
-        position: 'absolute',
-        zIndex: 2,
-    },
-    block: {
-        padding: 10,
-        backgroundColor: '#ccc',
-        borderRadius: 5,
-    },
-    input: {
-        height: 20,
-        borderColor: 'gray',
-        borderWidth: 1,
-        width: 20,
-        textAlign: 'center',
-        marginLeft: 5,
-    },
-    scriptScroll: {
-        flex: 2,
     },
 });
+
+export default Game2;
