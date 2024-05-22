@@ -3,12 +3,16 @@ Expo wymaga Node.js, środowiska uruchomieniowego JavaScript. Pobierz go ze [str
 
 ## Zainstaluj Expo
 Expo jest narzędziem, które pomaga w budowaniu aplikacji React Native. Możesz zainstalować Expo, używając npm (Node Package Manager), który powinien być już zainstalowany, jeśli zainstalowałeś Node.js. Otwórz terminal lub wiersz poleceń i uruchom następujące polecenie:
+(To polecenie nie jest wymagane gdyż jest on do instalacji globalnej expo, wszelkie zależności w projekcie zainstalujemy już w folderze z projektem)
 
 ```bash
 npm install -g expo-cli
 ```
 
+W przypadku braku uprawnień (na Windowsie cmd z administratorem, Linuxie sudo)
+
 ### Warto też zainstalować pakiet npx jeśli nie jest dostarczony wraz z node.js:
+(Powinno być dostarczone)
 
 ```bash
 npm install -g npx
