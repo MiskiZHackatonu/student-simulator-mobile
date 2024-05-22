@@ -8,6 +8,12 @@ Expo jest narzędziem, które pomaga w budowaniu aplikacji React Native. Możesz
 npm install -g expo-cli
 ```
 
+### Warto też zainstalować jeśli nie jest dostarczony wraz z node.js:
+
+```bash
+npm install -g npx
+```
+
 ### W folderze z expo (aplikacją mobilna)
 
 1. Zainstaluj zależności:
